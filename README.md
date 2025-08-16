@@ -17,7 +17,7 @@ This Server provides user iterface to upload over-the-air (OTA)  firmware update
 
 ## Documentation
 
-[Documentation](https://linktodocumentation)
+[Documentation](https://drive.google.com/file/d/1_6xoMgO2C6hgqHMbJJluaFHKyYJGnjdH/view?usp=drive_link)
 
 
 ## Installation
