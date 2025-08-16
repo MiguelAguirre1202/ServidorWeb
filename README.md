@@ -1,103 +1,149 @@
-<p align="center">
-  <a href="https://elegantota.pro?ref=ghfeature" target="_blank">
-    <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/feature.png" width="1200"></p>
-  </a>
-</p>
 
-<br/>
+# Web Server Gatria 
 
-<p>
-<img src="https://img.shields.io/github/last-commit/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
-&nbsp;
-<img src="https://img.shields.io/github/actions/workflow/status/ayushsharma82/ElegantOTA/ci.yml?branch=master&style=for-the-badge" />
-&nbsp;
-<img src="https://img.shields.io/github/license/ayushsharma82/ElegantOTA.svg?style=for-the-badge" />
-</p>
+This Server provides user iterface to upload over-the-air (OTA)  firmware updates to your hardware with precise status and progress. It also handles MAC addresses for SPNOW communication between microcontrollers.
 
-<br/>
-
-<p>Over-the-air update library for wireless microcontrollers</p>
-
-<p>
-ElegantOTA provides a beautiful user interface to upload over-the-air firmware/filesystem updates to your hardware with precise status and progress. ElegantOTA is designed to make the process of OTA updates slick and simple!
-</p>
-
-<br/>
-<br/>
 
 ## Features
 
-- 🔥 Quick & simple OTA procedure
-- 🏀 Get useful insight on progress and status of your OTA update
-- 🎷 No need to learn HTML/CSS/JS
-- 🛫 Ready to use within 3 lines of code
+- Quick & simple OTA procedure
+- Get useful insight on progress and status of your OTA update
+-  Ready to use within 3 lines of code
+- No need to learn HTML/CSS/JS
+- Credential control
+- Mac address management
+- Visualization of spnow connectivity stage
 
-<br/>
 
-## Supported MCUs
+## Documentation
 
-ElegantOTA works on the following microcontrollers/boards:
+[Documentation](https://linktodocumentation)
 
-- ESP8266
-- ESP32
-- RP2040 (+WiFi / Pico W)
-- RP2350 (+WiFi / Pico 2 W)
-- *( more coming soon )*
 
-<br/>
-<br/>
+## Installation
 
-<h2>Documentation</h2>
-<p>Learn more about Installation & Usage: <a href="https://docs.elegantota.pro">Click Here</a></p>
+__For Arduino IDE:__
 
-<br>
+For Windows:
 
-<!-- <b>Antivirus Issue:</b> If you have an antivirus on your PC with internet security, the progress bar on webpage will instantly show 100% because of request caching by your antivirus software. There is no fix for this unless you want to disable your antivirus or whitelist your local IP addresses in it. ( Same is the case with iOS, safari will cache the outgoing requests ) -->
+- Download the [Repository.](https://github.com/MiguelAguirre1202/ServidorWeb.git)
 
-<br>
+- Extract the .zip in 
+`Documents > Arduino > Libraries > {Place "ServidorWeb" folder Here}`.
 
-## Open-Source Preview
-*Preview might appear as blurry due to image optimization.*
-<br>
+For Linux:
 
-<img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/demo.gif" width="600">
+- Download the [Repository.](https://github.com/MiguelAguirre1202/ServidorWeb.git)
 
-<br>
-<br>
+- Extract the .zip in `Sketchbook > Libraries > {Place "ServidorWeb" folder Here}`
 
-## Looking for more? Upgrade to Pro.
+__For Plarformio:__
 
-ElegantOTA Pro comes with the following extended functionality:
-- Exclusive Drag & Drop Zone
-- Toggle OTA modes
-- Hardware ID & Firmware Version on UI
-- Whitelabel / Branding
-- Commercial License
+To include this library and be able to use it, it is necessary to define it in the platformio.ini in the following wing:
 
-Atlast, It is a fantastic way to support the developer for the time went into the making & maintaining the library.
+```bash
+  lib_deps = 
+		https://github.com/MiguelAguirre1202/ServidorWeb.git
+```
 
-<br> <b>Available here: </b>
+It is recommended to update the libraries with the following command in the terminal:
 
-- [Official Webstore (elegantota.pro)](https://elegantota.pro)
+```bash
+  pio pkg update
+```
+    
+## Integration Guide
 
-<br/>
+Integrating Web Server in your existing code is pretty simple. This guide assumes that you already have a simple webserver code prepared and you just need to inject the following lines in your existing code:
 
-<a href="https://elegantota.pro" target="_blank">
-  <img src="https://raw.githubusercontent.com/ayushsharma82/ElegantOTA/master/docs/pro-preview.jpg" alt="ElegantOTA Pro" width="600">
-</a>
+__1. Include Dependency__
+    
+At the very beginning of sketch include the ElegantOTA library.
 
-<br>
-<br>
+```bash
+ #include <ElegantOTA.h>
+```
 
-<h2>Contributions</h2>
-<p>Every contribution to this repository is highly appreciated! If you spot any bug or problem, open a issue or pull request so that it can be rectified for everyone.</p>
+__2. Add `begin` function__
 
-**For feature requests:** Please open a issue and I'll add the feature in a future release once I get some time in my hands.
+Now add the `begin` function of ElegantOTA in setup block of your sketch. This will inject ElegantOTA routes and logic into the web server.
 
-<br/>
+```bash
+ElegantOTA.begin(&server);
+```
 
-<h2>License</h2>
+__3. Add `loop` function__
 
-ElegantOTA open-source edition is licensed under Affero General Public License v3.0 ( AGPL-3.0 ).
+Last part is to call the `loop` function of ElegantOTA in loop block of your sketch. This loop block is necessary for ElegantOTA to handle reboot after OTA update.
 
-If you are planning to use ElegantOTA in a commercial project, please consider purchasing [ElegantOTA Pro](https://elegantota.pro) which comes with a less restrictive SOFTT Commercial License 1.2 ( SCL-1.2 ).
+```bash
+ElegantOTA.loop();
+```
+
+__4. Final Code__
+
+This is how a ready to use example will look like. After uploading the code to your platform, you can access ElegantOTA portal on `http://<YOUR_DEVICE_IP>/update`
+
+```javascript
+ 
+#if defined(ESP8266)
+  #include <ESP8266WiFi.h>
+  #include <WiFiClient.h>
+  #include <ESP8266WebServer.h>
+#elif defined(ESP32)
+  #include <WiFi.h>
+  #include <WiFiClient.h>
+  #include <WebServer.h>
+#endif
+ 
+#include <ElegantOTA.h>
+ 
+const char* ssid = "........";
+const char* password = "........";
+ 
+#if defined(ESP8266)
+  ESP8266WebServer server(80);
+#elif defined(ESP32)
+  WebServer server(80);
+#endif
+ 
+void setup(void) {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.println("");
+ 
+  // Wait for connection
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+ 
+  server.on("/", []() {
+    server.send(200, "text/plain", "Hi! This is ElegantOTA Demo.");
+  });
+ 
+  ElegantOTA.begin(&server);    // Start ElegantOTA
+  server.begin();
+  Serial.println("HTTP server started");
+}
+ 
+void loop(void) {
+  server.handleClient();
+  ElegantOTA.loop();
+}
+}
+```
+
+
+## Author
+
+- [@ayushsharma82](https://github.com/ayushsharma82)
+
+- [@MiguelAngel1202](https://www.github.com/octokatherine)
+
