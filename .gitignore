@@ -32,6 +32,9 @@
 *.out
 *.app
 
+#HTML files
+*.html
+
 node_modules
 .DS_Store
 .vscode
