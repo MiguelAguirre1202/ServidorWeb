@@ -3,6 +3,6 @@
 
 #include <Arduino.h>
 
-extern const uint8_t ELEGANT_HTML[254489];
+extern const uint8_t ELEGANT_HTML[2544220];
 
 #endif
