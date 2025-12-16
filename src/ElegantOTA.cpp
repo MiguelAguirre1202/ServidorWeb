@@ -38,6 +38,29 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
   #endif
 
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
+    _server->on("/data", HTTP_GET, [&](AsyncWebServerRequest *request){
+      if(_authenticate && !request->authenticate(_username.c_str(), _password.c_str())){
+        return request->requestAuthentication();
+      }
+      #if defined(ASYNCWEBSERVER_VERSION) && ASYNCWEBSERVER_VERSION_MAJOR > 2  // This means we are using recommended fork of AsyncWebServer
+        AsyncWebServerResponse *response = request->beginResponse(200, "text/html", DATA_HTML, sizeof(DATA_HTML));
+      #else
+        AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", DATA_HTML, sizeof(DATA_HTML));
+      #endif
+      response->addHeader("Content-Encoding", "gzip");
+      request->send(response);
+    });
+  #else
+    _server->on("/data", HTTP_GET, [&](){
+      if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
+        return _server->requestAuthentication();
+      }
+      _server->sendHeader("Content-Encoding", "gzip");
+      _server->send_P(200, "text/html", (const char*)DATA_HTML, sizeof(DATA_HTML));
+    });
+  #endif
+
+  #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     _server->on("/ota/start", HTTP_GET, [&](AsyncWebServerRequest *request) {
       if (_authenticate && !request->authenticate(_username.c_str(), _password.c_str())) {
         return request->requestAuthentication();
