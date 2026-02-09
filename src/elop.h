@@ -5,6 +5,4 @@
 
 extern const uint8_t ELEGANT_HTML[250761];
 
-
-
 #endif
