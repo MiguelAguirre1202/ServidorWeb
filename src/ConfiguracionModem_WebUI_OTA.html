@@ -132,7 +132,7 @@
         </div> -->
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Ping Server:</label>
-            <input type="text" id="input_ping_server" name="ping_server" placeholder="Ping Server">
+            <input type="text" id="input_ping_server" name="ping_server">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Enable Auth:</label>
@@ -253,11 +253,11 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Serial Number:</label>
-            <input type="number" name="serial_number" placeholder="Serial Number">
+            <input type="number" id="input_serial_number" name="serial_number" placeholder="Serial Number">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Key:</label>
-            <input type="number" name ="key" placeholder="Your Key">
+            <input type="number" id="input_key" name ="key" min="1" max="9999999" step="1">
         </div>
         <input type="file"> 
         <span id="resultConfigModem" class="text-xs mt-2"></span>
@@ -274,16 +274,16 @@
         const btnVolver  = document.getElementById('btnVolver');
         const btnReset   = document.getElementById('btnReset');
 
-        async function checkAuth() {
-            try{
-                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-                if(!r.ok){
-                    window.location.replace('/update');
-                }
-            }catch (e){
-                window.location.replace('/update');
-            } 
-        }
+        // async function checkAuth() {
+        //     try{
+        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+        //         if(!r.ok){
+        //             window.location.replace('/update');
+        //         }
+        //     }catch (e){
+        //         window.location.replace('/update');
+        //     } 
+        // }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -292,7 +292,7 @@
             }
             await checkAuth();
         });
-        
+
         window.addEventListener('pagehide',() =>{
             navigator.sendBeacon('/auth-logout');
         });
@@ -376,6 +376,13 @@
                 if (this.value !== "" && valor < minimo) this.value = minimo;
             });
         });
+
+        const inputKey = document.getElementById('input_key');
+        if (inputKey) {
+            inputKey.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '').slice(0, 7);
+            });
+        }
 
         // formulario.addEventListener('submit', function(e){
 
@@ -464,6 +471,11 @@
                 document.getElementById ("input_time_trigger_wd2").value = datos.time_trigger_wd2;
                 document.getElementById ("input_time_trigger_wd3").value = datos.time_trigger_wd3;
 
+                document.getElementById ("input_serial_number").value = datos.serial_number;
+                document.getElementById ("input_key").value = datos.key;
+                document.getElementById ("input_ping_server").value = datos.ping_server;
+
+                
                 console.log("Datos cargados correctamente");
             }catch (error){
                 console.error("Error cargando configuracion", error);
