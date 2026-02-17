@@ -285,8 +285,16 @@
             } 
         }
 
-        window.addEventListener('pageshow', function(){
-            checkAuth();
+        window.addEventListener('pageshow', async (e) =>{
+            if(e.persisted){
+                await checkAuth();
+                return;
+            }
+            await checkAuth();
+        });
+        
+        window.addEventListener('pagehide',() =>{
+            navigator.sendBeacon('/auth-logout');
         });
 
         document.querySelectorAll('.reglasInputs').forEach(input =>{
