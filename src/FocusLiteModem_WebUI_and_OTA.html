@@ -560,7 +560,7 @@
           return;
         }
 
-        window.location.replace = `/modemConfiguration?t=${encodeURIComponent(data.ticket)}`;
+      window.location.href = `/modemConfiguration?t=${encodeURIComponent(data.ticket)}`;
       }catch(e){
         authError.textContent = 'No se pudo validar. intenta de nuevo';
         authError.style.display = 'block';

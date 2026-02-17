@@ -267,11 +267,27 @@
     <button>Configuracion por defecto</button> <!-- AT+&F--> 
     <button id="btnReset">RESET</button> <!-- AT+&RESET -->
     <button id="btnVolver">Volver</button>
+
     <script>
         const formulario = document.getElementById('formConfigModem');
-        const btnSave = document.getElementById('btnSave');
-        const btnVolver = document.getElementById('btnVolver');
-        const btnReset = document.getElementById('btnReset');
+        const btnSave    = document.getElementById('btnSave');
+        const btnVolver  = document.getElementById('btnVolver');
+        const btnReset   = document.getElementById('btnReset');
+
+        async function checkAuth() {
+            try{
+                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+                if(!r.ok){
+                    window.location.replace('/update');
+                }
+            }catch (e){
+                window.location.replace('/update');
+            } 
+        }
+
+        window.addEventListener('pageshow', function(){
+            checkAuth();
+        });
 
         document.querySelectorAll('.reglasInputs').forEach(input =>{
             input.addEventListener('keydown', function(event){
@@ -310,10 +326,14 @@
             const confirmar = confirm("Tiene cambios sin guardar. Esta seguro de que quiere salir?");
             if (confirmar) {
                 btnSave.disabled = true;
-                window.location.href = "/"; // O tu ruta de destino
+                // window.location.href = "/"; // O tu ruta de destino
+                fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
+                    .finally(() => windows.location.replace('/update'));
             }
-        } else {
-            window.location.href = "/";
+        }else {
+            // window.location.href = "/";
+            fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
+                .finally(() => windows.location.replace('/update'));
         }
         });
 
