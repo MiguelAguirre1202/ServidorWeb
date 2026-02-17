@@ -261,18 +261,19 @@
         </div>
         <input type="file"> 
         <span id="resultConfigModem" class="text-xs mt-2"></span>
-        <button type="submit" id="btnSave" disabled="false">SAVE</button> <!-- AT+SAVE -->
-    </form>
-    <button>Exportar configuracion</button> <!-- AT+&F--> 
-    <button>Configuracion por defecto</button> <!-- AT+&F--> 
-    <button id="btnReset">RESET</button> <!-- AT+&RESET -->
-    <button id="btnVolver">Volver</button>
+        <button type="submit" id="btnSave" disabled="false">SAVE</button>
+
+        <button id="btnExport" type="button">Exportar configuracion</button> 
+        <button>Configuracion por defecto</button>  
+        <button id="btnReset">RESET</button> 
+        <button id="btnVolver">Volver</button>
 
     <script>
         const formulario = document.getElementById('formConfigModem');
         const btnSave    = document.getElementById('btnSave');
         const btnVolver  = document.getElementById('btnVolver');
         const btnReset   = document.getElementById('btnReset');
+        const btnExport  = document.getElementById('btnExport');
 
         async function checkAuth() {
             try{
@@ -323,10 +324,9 @@
         });
 
         window.addEventListener('beforeunload', (e) => {
-            // Si el botón Save no está deshabilitado, significa que hay cambios
             if (!btnSave.disabled) {
                 e.preventDefault();
-                e.returnValue = ''; // Requerido por Chrome para mostrar la alerta
+                e.returnValue = '';
             }
         });
         btnVolver.addEventListener('click', (e) => {
@@ -334,12 +334,11 @@
             const confirmar = confirm("Tiene cambios sin guardar. Esta seguro de que quiere salir?");
             if (confirmar) {
                 btnSave.disabled = true;
-                // window.location.href = "/"; // O tu ruta de destino
                 fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
                     .finally(() => window.location.replace('/update'));
             }
         }else {
-            // window.location.href = "/";
+
             fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
                 .finally(() => window.location.replace('/update'));
         }
@@ -383,21 +382,6 @@
                 this.value = this.value.replace(/\D/g, '').slice(0, 7);
             });
         }
-
-        // formulario.addEventListener('submit', function(e){
-
-        //     e.preventDefault();
-            
-        //     const datosFormulario = new URLSearchParams(new FormData(formulario)); 
-
-        //     fetch('/configModem', {
-        //         method:'POST',
-        //         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        //         body: datosFormulario
-        //     }).then(r => r.text()).then(msg => {
-        //         document.getElementById('resultConfigModem').innerHTML = msg;
-        //     });
-        // });
         formulario.addEventListener('submit', async(e) =>{
 
             e.preventDefault();
@@ -480,6 +464,41 @@
             }catch (error){
                 console.error("Error cargando configuracion", error);
             }
+        });
+
+        btnExport.addEventListener('click', () =>{
+            const data = {};
+            const controls = formulario.querySelectorAll('input,select,textarea');
+
+            controls.forEach((el) =>{
+                if(!el.name) return;
+                if(el.type === 'file') return;
+
+                if((el.type === 'checkbox' || el.type === 'radio') && !el.checked) return;
+
+                let value = el.value;
+
+                if(el.type === 'number' && value !==''){
+                    value = Number(value);
+                }
+
+                data[el.name] = value;
+            });
+            data.exported_at = new Date().toISOString();
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], {
+                type: 'application/json;charset=utf-8'
+            });
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const ts = new Date().toISOString().replace(/[:.]/g, '-');
+            a.href = url;
+            a.download = `focuslite_config_${ts}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
         });
 
         const logoImg = document.getElementById("logoImg");

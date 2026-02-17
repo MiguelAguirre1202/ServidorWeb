@@ -256,15 +256,15 @@
           </div>
 
         </div>
-          <button type="button" id="btnOpenConfig" class="hover:bg-blue-500 back_ground_gatria text-white-button px-3 py-1 text-sm mt-2">Configuracion del Focus Lite</button>
+          <button type="button" id="btnOpenConfig" class="hover:bg-blue-500 back_ground_gatria text-white-button px-3 py-1 text-sm mt-2">Configuracion Focus Lite</button>
       </div>
 
       <div id="authModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:9999; align-items:center; justify-content:center;">
         <div style="background:#fff; padding:16px; border-radius:8px; width:320px;">
           <h3 style="margin-bottom:10px; font-weight:bold;">Autenticacion requerida</h3>
-          <label for="configPass" class="text-xs">Contraseña</label>
+          <label for="configPass" class="text-xs">Password</label>
           <input id="configPass" type="password" class="border rounded-lg px-2 py-1 text-sm w-full" placeholder="Ingresa la contraseña" autocomplete="off" />
-          <p id="authError" class="text-xs text-red-500 mt-2" style="display:none;">Contraseña incorrecta</p>
+          <p id="authError" class="text-xs text-red-500 mt-2" style="display:none;">Incorrect Password</p>
           <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
             <button id="btnCancelAuth" type="button" class="bg-gray-50 border border-[#b0b3b8] px-3 py-1 text-sm rounded-lg">Cancelar</button>
             <button id="btnSubmitAuth" type="button" class="back_ground_gatria text-white-button px-3 py-1 text-sm rounded-lg">Ingresar</button>
@@ -475,20 +475,17 @@
 
       document.getElementById('wifiForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        // const ssid = document.getElementById('ssid').value;
         const password = document.getElementById('password').value;
         fetch('/setap', {
           method: 'POST',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           body:    '&password=' + encodeURIComponent(password)
-        //   body: 'ssid=' + encodeURIComponent(ssid) + '&password=' + encodeURIComponent(password)
         })
         .then(r => r.text())
         .then(msg => {
           document.getElementById('wifiResult').innerHTML = msg;
         });
       });
-
 
       /*Actualizacion de login*/
 
@@ -533,7 +530,7 @@
 
       const pass = configPass.value.trim();
       if(!pass){
-        authError.textContent = 'Debes ingresar una contraseña';
+        authError.textContent = 'You must enter a password';
         authError.style.display = 'block';
         return;
       }
@@ -548,21 +545,21 @@
         });
 
         if(!res.ok){
-          authError.textContent = 'Contraseña incorrecta';
+          authError.textContent = 'Incorrect Password';
           authError.style.display = 'block';
           return;
         }
 
         const data = await res.json();
         if(!data.ok||!data.ticket){
-          authError.textContent = 'Error de autenticación';
+          authError.textContent = 'Authentication error';
           authError.style.display = 'block'
           return;
         }
 
       window.location.href = `/modemConfiguration?t=${encodeURIComponent(data.ticket)}`;
       }catch(e){
-        authError.textContent = 'No se pudo validar. intenta de nuevo';
+        authError.textContent = 'Validation failed. Please try again.';
         authError.style.display = 'block';
       }
     }
@@ -588,7 +585,6 @@
     // Carga normal
     window.addEventListener('load', resetAuthUI);
 
-    // Volver con flechas (bfcache)
     window.addEventListener('pageshow', function () {
       resetAuthUI();
     });
