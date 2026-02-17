@@ -328,12 +328,12 @@
                 btnSave.disabled = true;
                 // window.location.href = "/"; // O tu ruta de destino
                 fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
-                    .finally(() => windows.location.replace('/update'));
+                    .finally(() => windows.location.href('/update'));
             }
         }else {
             // window.location.href = "/";
             fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
-                .finally(() => windows.location.replace('/update'));
+                .finally(() => windows.location.href('/update'));
         }
         });
 
