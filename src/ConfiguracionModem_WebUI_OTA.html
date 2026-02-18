@@ -161,14 +161,14 @@
             <label>Operator:</label>
             <input type="number" id="input_operator" name="operator" class="limite" data-max="48">
         </div>
-        <!-- <div class="flex flex-row justify-between items-center gap-4">
+        <div class="flex flex-row justify-between items-center gap-4">
             <label>User:</label>
-            <input type="text" placeholder="User">
+            <input type="text" id="input_user" name="user" maxlength="56" class="reglasInputs">
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Password:</label>
-            <input type="password" placeholder="Enter your password">
-        </div> -->
+            <input type="password" id="input_pass" name="pass" maxlength="56" class="reglasInputs">
+        </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Ping Server:</label>
             <input type="text" id="input_ping_server" name="ping_server">
@@ -317,16 +317,16 @@
         const btnImport  = document.getElementById('btnImport');
         const configFile = document.getElementById('configFile');
 
-        async function checkAuth() {
-            try{
-                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-                if(!r.ok){
-                    window.location.replace('/update');
-                }
-            }catch (e){
-                window.location.replace('/update');
-            } 
-        }
+        // async function checkAuth() {
+        //     try{
+        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+        //         if(!r.ok){
+        //             window.location.replace('/update');
+        //         }
+        //     }catch (e){
+        //         window.location.replace('/update');
+        //     } 
+        // }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -476,6 +476,10 @@
                 document.getElementById ("input_altern_opr").value = datos.altern_opr;
                 document.getElementById ("input_other_alter_opr").value = datos.other_alter_opr;
                 document.getElementById ("input_operator").value = datos.operator;
+
+                document.getElementById ("input_user").value = datos.user;
+                document.getElementById ("input_pass").value = datos.pass;
+
                 document.getElementById ("input_enable_auth").value = datos.enable_auth;
                 document.getElementById ("input_enable_forced_3g").value = datos.enable_forced_3g;
                 document.getElementById ("input_enable_automatic_apn").value = datos.enable_automatic_apn;
@@ -556,7 +560,7 @@
             a.remove();
             URL.revokeObjectURL(url);
         });
-        
+
         btnImport.addEventListener('click',() => configFile.click());
         configFile.addEventListener('change', async (e) =>{
             const file = e.target.files?.[0];
