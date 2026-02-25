@@ -532,7 +532,11 @@
                     out[el.name] = el.checked ? (el.value || true): false;
                     return;
                 }
-                out[el.name] = el.type === 'number' && el.value !== ''? Number(el.value): el.value;
+                if (el.name === 'key') {
+                    out[el.name] = el.value === '' ? '' : String(el.value);
+                    return;
+                }
+                out[el.name] = el.type === 'number' && el.value !== '' ? Number(el.value) : el.value;
             });
 
             out.exported_at = new Date().toISOString();
