@@ -167,7 +167,7 @@
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Password:</label>
-            <input type="password" id="input_pass" name="pass" maxlength="56" class="reglasInputs">
+            <input type="text" id="input_pass" name="pass" maxlength="56" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Ping Server:</label>
@@ -512,6 +512,16 @@
             }
         });
 
+        function isValidConfig(cfg){
+            if(!cfg || typeof cfg !== 'object') return false;
+            if(cfg.version !== 1) return false;
+            const required = [
+                'baud_meter', 'serial_meter', 'apn', 'operator', 'tcp_port'
+            ];
+            return required.every((k) => k in cfg);
+        }
+
+
         function collectFormConfig(formEl){
             const out = {};
             const controls = formEl.querySelectorAll('input, select, textarea');
@@ -568,6 +578,13 @@
             try{
                 const text = await file.text();
                 const cfg = JSON.parse(text);
+                if(!isValidConfig(cfg)){
+                   btnSave.disabled = true;
+                //    btnSave.style.backgroundColor = "#4CAF50";
+                   alert('JSON invalido o no corresponde a este formulario');
+                   return;
+                } 
+                
                 applyConfigToForm(formulario, cfg);
                 alert('Configuracion importada al formulario. Falta presionar SAVE');
             }catch{
