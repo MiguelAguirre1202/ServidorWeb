@@ -317,16 +317,16 @@
         const btnImport  = document.getElementById('btnImport');
         const configFile = document.getElementById('configFile');
 
-        // async function checkAuth() {
-        //     try{
-        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-        //         if(!r.ok){
-        //             window.location.replace('/update');
-        //         }
-        //     }catch (e){
-        //         window.location.replace('/update');
-        //     } 
-        // }
+        async function checkAuth() {
+            try{
+                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+                if(!r.ok){
+                    window.location.replace('/update');
+                }
+            }catch (e){
+                window.location.replace('/update');
+            } 
+        }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
