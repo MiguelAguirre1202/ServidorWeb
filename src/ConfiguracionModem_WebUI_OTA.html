@@ -5,12 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datos Medidor</title>
     <style>
+        :root{
+            --brand-600:#2666af;
+            --brand-300:#99b8d6;
+            --brand-700:#1f5594;
+            --brand-100:#e6eff9;
+        }
+
         body {
-            /* background: #2e2e30; */
+            background: linear-gradient(180deg, var(--brand-100) 0%, #ffffff 40%);
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin-top: 20px;
-            /* color: #fcfcfc; */
+            color: #0f172a;
+        }
+
+        .btn-primary{
+            background: var(--brand-600);
+            color : #fff;
+            border: 1px solid var(--brand-600);
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-weight: 600;
+            letter-spacing: .2px;
+            box-shadow: 0 2px 6px #2666af40;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.03s ease;
+        }
+
+        .btn-primary:hover{
+            background: var(--brand-700);
+            box-shadow: 0 4px 10px #2666af47;
+        }
+
+        .btn-primary:active{
+            transform: translateY(1px);
+        }
+
+        .btn-primary:focus-visible{
+            outline: 2px solid var(--brand-300);
+            outline-offset: 2px;
+        }
+
+        .btn-primary:disabled,
+        .btn-primary[disabled]{
+            background: var(--brand-300);
+            border-color: var(--brand-300);
+            color: #fff;
+            opacity: .65;
+            box-shadow: none;
+            cursor: not-allowed;
+            filter: saturate(.8);
+        }
+
+        #formConfigModem {
+            max-width: 900px;
+            margin: 24px auto 60px;
+            padding: 24px 22px;
+            background: #fff;
+            border: 1px solid #99b8d699;
+            border-radius: 0 8px 24px rgba(38, 102, 175, .12);
+            display: grid;
+            gap: 10px;
+        }
+
+        /* Filas del formulario */
+        #formConfigModem > div {
+            display: grid;
+            grid-template-columns: 1.1fr 1.1fr;
+            gap:12px;
+            align-items: center;
+            padding: 10px 12px;
+            border: 1px solid rgba(153, 184, 214, .6);
+            border-radius: 10px;
+            background: #f7fbff;
+        }
+        #formConfigModem > div:nth-child(even) {
+            background: #eef4fb;
+        }
+
+        #formConfigModem label {
+            font-weight: 600;
+            color: #2b4b6e;
+            /* text-align: left; */
+        }
+
+        #formConfigModem input,
+        #formConfigModem select{
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid rgba(153,184,214,.9);
+            border-radius: 8px;
+            background: #fff;
+            color: #0f172a;
+        }
+
+        #formConfigModem input{
+            width: 95%;
+        }
+        
+
+        #formConfigModem input:focus,
+        #formConfigModem select:focus{
+            outline: none;
+            border-color: var(--brand-600);
+            box-shadow: 0 0 0 3px rgba(38, 102, 175, .2);
+        }
+
+        #formConfigModem > button.btn-primary {
+            width: min(100%, 380px);
+            margin: 8px auto 0;
+            display: block;
+        }
+
+        @media (max-width: 740px) {
+            #formConfigModem{
+                padding: 16px;
+            }
+            #formConfigModem > div {
+                grid-template-columns: 1fr;
+            }
         }
         
         svg {
@@ -43,8 +156,7 @@
         }
         
         th {
-            /* background: #869bf085; */
-            background: rgba(38, 102, 175, 0.767);
+            background: #2666afc4;
             color: #ffffff;
             border-bottom: 1px solid #333a55;
         }
@@ -98,6 +210,11 @@
             font-size: 28px;
             font-weight: 600;
             margin-top: 6px;
+        }
+
+        .form-actions{
+            background: none !important; 
+            border: none !important;
         }
     </style>
 </head>
@@ -298,14 +415,17 @@
             <label>Key:</label>
             <input type="number" id="input_key" name ="key" min="0000000" max="9999999" step="1">
         </div>
-        <button type="submit" id="btnSave" disabled="false">SAVE</button>
+        <div class="form-actions">
+            <button type="submit" id="btnSave" class="btn-primary" disabled="false">SAVE</button>
+            <input type="file" id="configFile" accept=".json" hidden>
+            <button type="button" id="btnImport" class="btn-primary">Importar configuracion</button>
+            <button id="btnExport" type="button" class="btn-primary">Exportar configuracion</button> 
+            <!-- <button type="button" class="btn-primary">Configuracion por defecto</button>   -->
+        </div>
+    </form>
         
-        <input type="file" id="configFile" accept=".json" hidden>
-        <button type="button" id="btnImport">Importar configuracion</button>
-        <button id="btnExport" type="button">Exportar configuracion</button> 
-        <button type="button">Configuracion por defecto</button>  
-        <button id="btnReset" type="button">RESET</button> 
-        <button id="btnVolver" type="button">Volver</button>
+        <button id="btnReset" type="button" class="btn-primary">RESET</button> 
+        <button id="btnVolver" type="button" class="btn-primary">Volver</button>
 
     <script>
         const formulario = document.getElementById('formConfigModem');
@@ -459,9 +579,7 @@
         });
 
         formulario.addEventListener('input', () => {
-            btnSave.disabled = false;
-            btnSave.style.backgroundColor = "#4CAF50"; 
-
+            btnSave.disabled = false; 
         });
 
         window.addEventListener('DOMContentLoaded', async () =>{
@@ -585,7 +703,6 @@
                 const cfg = JSON.parse(text);
                 if(!isValidConfig(cfg)){
                    btnSave.disabled = true;
-                //    btnSave.style.backgroundColor = "#4CAF50";
                    alert('JSON invalido o no corresponde a este formulario');
                    return;
                 } 
