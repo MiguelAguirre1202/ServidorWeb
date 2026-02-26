@@ -296,16 +296,16 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Key:</label>
-            <input type="number" id="input_key" name ="key" min="1" max="9999999" step="1">
+            <input type="number" id="input_key" name ="key" min="0000000" max="9999999" step="1">
         </div>
         <button type="submit" id="btnSave" disabled="false">SAVE</button>
         
         <input type="file" id="configFile" accept=".json" hidden>
         <button type="button" id="btnImport">Importar configuracion</button>
         <button id="btnExport" type="button">Exportar configuracion</button> 
-        <button>Configuracion por defecto</button>  
-        <button id="btnReset">RESET</button> 
-        <button id="btnVolver">Volver</button>
+        <button type="button">Configuracion por defecto</button>  
+        <button id="btnReset" type="button">RESET</button> 
+        <button id="btnVolver" type="button">Volver</button>
 
     <script>
         const formulario = document.getElementById('formConfigModem');
@@ -372,6 +372,7 @@
             }
         });
         btnVolver.addEventListener('click', (e) => {
+        e.preventDefault();
         if (!btnSave.disabled) {
             const confirmar = confirm("Tiene cambios sin guardar. Esta seguro de que quiere salir?");
             if (confirmar) {
