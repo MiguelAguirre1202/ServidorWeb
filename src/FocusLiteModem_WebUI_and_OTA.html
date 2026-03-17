@@ -291,6 +291,21 @@
 
           </div>
 
+          <hr class="opacity-60"/>
+
+          <div class="border mb-4 bg-gray-50 blueGatria" style="padding:12px 16px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+              <span style="font-weight:bold; font-size:14px; color:#374151;">Prueba de comunicación con medidor</span>
+              <button type="button" id="btnMeterTest" onclick="testMeterCommunication()"
+                class="hover:bg-blue-500 back_ground_gatria text-white-button px-3 py-1 text-sm"
+                style="display:flex; align-items:center; gap:6px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Probar comunicación
+              </button>
+            </div>
+            <div id="meterTestResult" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; font-size:13px; align-items:center; gap:8px;"></div>
+          </div>
+
         </div>
           <button type="button" id="btnOpenConfig" class="hover:bg-blue-500 back_ground_gatria text-white-button px-3 py-1 text-sm mt-2">Configuracion Focus Lite</button>
       </div>
@@ -592,6 +607,7 @@
       if (path === '/setotalogin') return 'Actualizando usuario y clave OTA...';
       if (path === '/auth-config') return 'Validando acceso...';
       if (path === '/ota/start') return 'Iniciando proceso OTA...';
+      if (path === '/meter-test') return 'Probando comunicación con el medidor...';
       return "Comunicando con el ESP...";
     }
 
@@ -602,7 +618,8 @@
           || path === '/setap'
           || path === '/setotalogin'
           || path === '/auth-config'
-          || path === '/ota/start';
+          || path === '/ota/start'
+          || path === '/meter-test';
     }
 
     const nativeFetch = window.fetch.bind(window);
@@ -689,6 +706,37 @@
     });
     
     
+    async function testMeterCommunication() {
+      const btn = document.getElementById('btnMeterTest');
+      const result = document.getElementById('meterTestResult');
+      btn.disabled = true;
+      result.style.display = 'none';
+      try {
+        const res = await fetch('/meter-test');
+        const data = await res.json();
+        result.style.display = 'flex';
+        if (data.success) {
+          result.style.background = '#f0fdf4';
+          result.style.border = '1px solid #86efac';
+          result.style.color = '#166534';
+          result.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Comunicación exitosa</span>';
+        } else {
+          result.style.background = '#fef2f2';
+          result.style.border = '1px solid #fca5a5';
+          result.style.color = '#991b1b';
+          result.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg><span>Falla de comunicación' + (data.message ? ': ' + data.message : '') + '</span>';
+        }
+      } catch (e) {
+        result.style.display = 'flex';
+        result.style.background = '#fef2f2';
+        result.style.border = '1px solid #fca5a5';
+        result.style.color = '#991b1b';
+        result.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg><span>Error al conectar con el dispositivo</span>';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
     function toggleAccordion(id) {
       document.querySelectorAll('.accordion-section').forEach(section => {
         const content = section.querySelector('.accordion-content');
