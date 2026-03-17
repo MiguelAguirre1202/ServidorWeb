@@ -20,6 +20,57 @@
             color: #0f172a;
         }
 
+        @keyframes espSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        #espSpinnerOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.22);
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #espSpinnerBox{
+            background: #fff;
+            border: 1px solid rgba(153,184,214,.95);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, .18);
+        }
+    
+        #espSpinnerBox {
+            background: #fff;
+            border: 1px solid rgba(153, 184, 214, .95);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 26px rgba(15, 23, 42, .18);
+        }
+
+        #espSpinnerIcon {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #d1d5db;
+            border-top-color: var(--brand-600);
+            border-radius: 50%;
+            animation: espSpin .8s linear infinite;
+        }
+
+        #espSpinnerLabel{
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
         .btn-primary{
             background: var(--brand-600);
             color : #fff;
@@ -427,6 +478,12 @@
         <button id="btnReset" type="button" class="btn-primary">RESET</button> 
         <button id="btnVolver" type="button" class="btn-primary">Volver</button>
 
+    <div id="espSpinnerOverlay" aria-live="polite" aria-busy="true">
+        <div id="espSpinnerBox">
+            <div id="espSpinnerIcon"></div>
+            <span id="espSpinnerLabel">Procesando...</span>
+        </div>
+    </div>
     <script>
         const formulario = document.getElementById('formConfigModem');
         const btnSave    = document.getElementById('btnSave');
@@ -436,6 +493,67 @@
 
         const btnImport  = document.getElementById('btnImport');
         const configFile = document.getElementById('configFile');
+
+        const espSpinnerOverlay = document.getElementById('espSpinnerOverlay');
+        const espSpinnerLabel   = document.getElementById('espSpinnerLabel');
+        let espPendingOps = 0;
+
+        function showEspSpinner(message = "Procesando...") {
+            espPendingOps++;
+            if (espSpinnerLabel) espSpinnerLabel.textContent = message;
+            if (espSpinnerOverlay) espSpinnerOverlay.style.display = 'flex';
+        }
+        function hideEspSpinner(){
+            espPendingOps = Math.max(0, espPendingOps - 1);
+            if(espPendingOps === 0 && espSpinnerOverlay){
+                espSpinnerOverlay.style.display = 'none';
+                if(espSpinnerLabel) espSpinnerLabel.textContent = "Procesando...";
+            }
+        }
+
+        function getPathFromFetchInput(input){
+            const raw = typeof input === 'string'
+                ? input
+                : (input && input.url ? input.url : '');
+
+            if (!raw) return '';
+
+            try{
+                return new URL(raw, window.location.origin).pathname;
+            }catch(_){
+                return raw;
+            }
+        }
+
+
+        function spinnerMessageFor(path){
+            if (path === '/auth-check')  return 'Validando sesion...';
+            if (path === '/getConfig')   return 'Cargando configuracion del modem...';
+            if (path === '/configModem') return 'Guardando configuracion...';
+            if (path === '/reboot')      return 'Reiniciando dispositivo...';
+            if (path === '/auth-logout') return 'Cerrando sesion...';
+            return 'Comunicando con el ESP...';
+        }
+
+        function shouldShowSpinner(path){
+            return path === '/getConfig'
+                || path === '/auth-check'
+                || path === '/configModem'
+                || path === '/reboot'
+                || path === '/auth-logout';
+        }
+
+        const nativeFetch = window.fetch.bind(window);
+        window.fetch = function(input, init){
+            const path = getPathFromFetchInput(input);
+
+            if (!shouldShowSpinner(path)){
+                return nativeFetch(input, init);
+            }
+
+            showEspSpinner(spinnerMessageFor(path));
+            return nativeFetch(input, init).finally(hideEspSpinner);
+        }
 
         async function checkAuth() {
             try{

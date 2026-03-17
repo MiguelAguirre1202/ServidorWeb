@@ -25,37 +25,33 @@
         gap: 8px;
       }
 
-.info-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 6px;
-  border-bottom: 1px dashed rgba(176, 179, 184, 0.3);
-}
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed rgba(176, 179, 184, 0.3);
+      }
 
-.info-row:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
+      .info-row:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
 
-.info-label {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: rgba(55, 65, 81, 0.7);
-  flex: 1 1 auto;
-}
+      .info-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        color: rgba(55, 65, 81, 0.7);
+        flex: 1 1 auto;
+      }
 
-.info-value {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111827;
-  text-align: right;
-  flex: 0 0 auto;
-}
-
-        flex-direction: column;
-        gap: 8px;
+      .info-value {
+        font-size: 13px;
+        font-weight: 600;
+        color: #111827;
+        text-align: right;
+        flex: 0 0 auto;
       }
 
       .info-row {
@@ -312,8 +308,15 @@
         </div>
       </div>
 
-
     </div>
+
+    <!-- Spinner global para operaciones con el ESP -->
+  <div id="espSpinnerOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.20); z-index:10001; align-items:center; justify-content:center;">
+    <div style="background:#fff; border:1px solid rgba(176,179,184,.6); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:10px;">
+      <div class="animate-spin rounded-full" style="width:24px; height:24px; border:3px solid #d1d5db; border-top-color:#2666af;"></div>
+      <span id="espSpinnerText" style="font-size:13px; font-weight:600; color:#111827;">Procesando...</span>
+    </div>
+  </div>
 
   <script type="module" crossorigin>
       (function(){
@@ -464,7 +467,7 @@
       .then(r => r.json())
       .then(data => { 
         document.getElementById('fw_version').innerText = "Firmware version: " + (data.fw_version || "N/A");
-        document.getElementById('hw_version').innerText = data.hw_version;
+        document.getElementById('hw_version').innerText = "Hardware version: " + (data.hw_version || "N/A");
       });
       
     fetch('/getapinfo')
@@ -549,10 +552,66 @@
   </script>
 
   <script>
-    const authModal  = document.getElementById('authModal');
-    const configPass = document.getElementById('configPass');
-    const authError  = document.getElementById('authError');
-    const logoImg    = document.getElementById("logoImg");
+    const authModal         = document.getElementById('authModal');
+    const configPass        = document.getElementById('configPass');
+    const authError         = document.getElementById('authError');
+    const logoImg           = document.getElementById("logoImg");
+    const espSpinnerOverlay = document.getElementById('espSpinnerOverlay');
+    const espSpinnerText    = document.getElementById('espSpinnerText');
+    let espPendingOps = 0;
+
+    function showEspSpinner(message = "Procesando..."){
+      espPendingOps++;
+      if (espSpinnerText) espSpinnerText.textContent = message;
+      if (espSpinnerOverlay) espSpinnerOverlay.style.display = 'flex';
+    }
+
+    function hideEspSpinner(){
+      espPendingOps = Math.max(0, espPendingOps - 1);
+      if(espPendingOps === 0 && espSpinnerOverlay){
+        espSpinnerOverlay.style.display = 'none';
+        if(espSpinnerText) espSpinnerText.textContent = "Procesando...";
+      }
+    }
+
+    function getRequestPath(input){
+      const raw = typeof input === 'string' ? input : (input && input.url ? input.url : '');
+      if(!raw) return '';
+      try{
+        return new URL(raw, window.location.origin).pathname;
+      }catch{
+          return raw;
+      }
+    }
+
+    function spinnerMessageFor(path) {
+      if (path === '/info') return 'Leyendo version de firmware...';
+      if (path === '/getapinfo') return 'Cargando credenciales guardadas...';
+      if (path === '/modeminfo') return "Cargando configuracion del modem...";
+      if (path === '/setap') return 'Actualizando WiFi AP...';
+      if (path === '/setotalogin') return 'Actualizando usuario y clave OTA...';
+      if (path === '/auth-config') return 'Validando acceso...';
+      if (path === '/ota/start') return 'Iniciando proceso OTA...';
+      return "Comunicando con el ESP...";
+    }
+
+    function shouldShowSpinnerFor(path){
+      return path === '/modeminfo'
+          || path === '/getapinfo'
+          || path === '/info'
+          || path === '/setap'
+          || path === '/setotalogin'
+          || path === '/auth-config'
+          || path === '/ota/start';
+    }
+
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async function(input, init){
+      const path = getRequestPath(input);
+      if(!shouldShowSpinnerFor(path)) return nativeFetch(input, init);
+      showEspSpinner(spinnerMessageFor(path));
+      return nativeFetch(input, init).finally(hideEspSpinner);
+    }
 
     function openAuthModal(){
       authError.style.display = 'none';
