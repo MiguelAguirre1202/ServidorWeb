@@ -5,7 +5,7 @@
 
 extern const uint8_t ELEGANT_HTML[84918];
 
-extern const uint8_t CONFIG_MODEM_HTML[56706];
+extern const uint8_t CONFIG_MODEM_HTML[56675];
 
 
 #endif

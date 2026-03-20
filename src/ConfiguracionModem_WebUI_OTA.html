@@ -751,7 +751,7 @@
 
         function isValidConfig(cfg){
             if(!cfg || typeof cfg !== 'object') return false;
-            if(cfg.version !== 1) return false;
+            // if(cfg.version !== 1) return false;
             const required = [
                 'meter_baudrate', 'meter_configuration', 'apn', 'operator', 'tcp_port'
             ];
