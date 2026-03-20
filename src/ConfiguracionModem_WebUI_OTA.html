@@ -289,7 +289,7 @@
     <form id="formConfigModem" method="post" action = "/configModem">
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Baud rate Meter:</label>
-            <select id="select_baud_meter" name="baud_meter" data-type="number">
+            <select id="select_baud_meter" name="meter_baudrate" data-type="number">
                 <option value="1200">1200</option>
                 <option value="2400">2400</option>
                 <option value="4800">4800</option>
@@ -300,7 +300,7 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label >Meter Configuration:</label>
-            <select id="select_serial_meter" name="serial_meter" data-type="number">
+            <select id="select_serial_meter" name="meter_configuration" data-type="number">
                 <option value="0">8 N 1</option>
                 <option value="1">7 E 1</option>
             </select>
@@ -311,19 +311,19 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Other Altern APN:</label>
-            <input type="text" id="input_other_altern_apn" name="other_altern_apn" maxlength="128" class="reglasInputs">
+            <input type="text" id="input_other_altern_apn" name="other_alter_apn" maxlength="128" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>APN:</label>
             <input type="text"id="input_apn" name="apn" maxlength="128" class="reglasInputs">
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Altern Operator:</label>
-            <input type="number" id="input_altern_opr" name="altern_opr" class="limite" data-max="48">
+            <label>Alter Operator:</label>
+            <input type="number" id="input_altern_opr" name="alter_operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Other Altern Operator:</label>
-            <input type="number" id ="input_other_alter_opr" name="other_alter_opr" class="limite" data-max="48">
+            <input type="number" id ="input_other_alter_opr" name="other_alter_operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Operator:</label>
@@ -365,21 +365,21 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Enable Transparent Mode:</label>
-            <select id="input_enable_transparent_mode" name="enable_transparent_mode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_enable_transparent_mode" name="enable_transparent" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Enable test mode:</label>
-            <select id="input_enable_test_mode" name="enable_test_mode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_enable_test_mode" name="enable_tmode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Mode Data:</label>
-            <select id="input_mode_data" name="mode_data" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_mode_data" name="mode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Data Transparent</option>
                 <option value="0">Normal mode</option>
             </select>
@@ -407,21 +407,21 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Enable IN1:</label>
-            <select id="input_enable_in1" name="enable_in1" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_enable_in1" name="enable_digital1" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Enable IN2:</label>
-            <select id="input_enable_in2" name="enable_in2" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_enable_in2" name="enable_digital2" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Meter type of port selection:</label>
-            <select id="input_meter_type_port" name="meter_type_port" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+            <select id="input_meter_type_port" name="meter_port_sel" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">RS485</option>
                 <option value="0">RS232</option>
             </select>
@@ -432,7 +432,7 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>TCP Maintenance Port:</label>
-            <input type="number" id="input_tcp_maintance_port" name="tcp_maintance_port" class="validar-rango" min="1" max="60000">
+            <input type="number" id="input_tcp_maintance_port" name="tcp_port_maintenance" class="validar-rango" min="1" max="60000">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>TCP Timeout ( ms ):</label>
@@ -444,7 +444,7 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Time to wait meter response completed ( ms ):</label>
-            <input type="number" id="input_time_wait_response" name="time_wait_response" class="validar-rango" min="1" max="254">
+            <input type="number" id="input_time_wait_response" name="time_to_wait_meter_response_ms" class="validar-rango" min="1" max="254">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label>Time to Trigger WD1 ( minutes ):</label>
@@ -705,13 +705,13 @@
                 const respuesta = await fetch('/getConfig');
                 const datos = await respuesta.json();
 
-                document.getElementById("select_baud_meter").value = datos.baud_meter;
-                document.getElementById("select_serial_meter").value = datos.serial_meter;
+                document.getElementById("select_baud_meter").value = datos.meter_baudrate;
+                document.getElementById("select_serial_meter").value = datos.meter_configuration;
                 document.getElementById ("input_alter_apn").value = datos.alter_apn;
                 document.getElementById ("input_other_altern_apn").value = datos.other_altern_apn;
                 document.getElementById ("input_apn").value = datos.apn;
-                document.getElementById ("input_altern_opr").value = datos.altern_opr;
-                document.getElementById ("input_other_alter_opr").value = datos.other_alter_opr;
+                document.getElementById ("input_altern_opr").value = datos.alter_operator;
+                document.getElementById ("input_other_alter_opr").value = datos.other_alter_operator;
                 document.getElementById ("input_operator").value = datos.operator;
 
                 document.getElementById ("input_user").value = datos.user;
@@ -720,20 +720,20 @@
                 document.getElementById ("input_enable_auth").value = datos.enable_auth;
                 document.getElementById ("input_enable_forced_3g").value = datos.enable_forced_3g;
                 document.getElementById ("input_enable_automatic_apn").value = datos.enable_automatic_apn;
-                document.getElementById ("input_enable_transparent_mode").value = datos.enable_transparent_mode;
-                document.getElementById ("input_enable_test_mode").value = datos.enable_test_mode;
-                document.getElementById ("input_mode_data").value = datos.mode_data;
+                document.getElementById ("input_enable_transparent_mode").value = datos.enable_transparent;
+                document.getElementById ("input_enable_test_mode").value = datos.enable_tmode;
+                document.getElementById ("input_mode_data").value = datos.mode;
                 document.getElementById ("input_enable_wd1").value = datos.enable_wd1;
                 document.getElementById ("input_enable_wd2").value = datos.enable_wd2;
                 document.getElementById ("input_enable_wd3").value = datos.enable_wd3;
-                document.getElementById ("input_enable_in1").value = datos.enable_in1;
-                document.getElementById ("input_enable_in2").value = datos.enable_in2;
-                document.getElementById ("input_meter_type_port").value = datos.meter_type_port;
+                document.getElementById ("input_enable_in1").value = datos.enable_digital1;
+                document.getElementById ("input_enable_in2").value = datos.enable_digital2;
+                document.getElementById ("input_meter_type_port").value = datos.meter_port_sel;
                 document.getElementById ("input_tcp_port").value = datos.tcp_port;
-                document.getElementById ("input_tcp_maintance_port").value = datos.tcp_maintance_port;
+                document.getElementById ("input_tcp_maintance_port").value = datos.tcp_port_maintenance;
                 document.getElementById ("input_tcp_timeout").value = datos.tcp_timeout;
                 document.getElementById ("input_socket_timeout").value = datos.socket_timeout;
-                document.getElementById ("input_time_wait_response").value = datos.time_wait_response;
+                document.getElementById ("input_time_wait_response").value = datos.time_to_wait_meter_response_ms;
                 document.getElementById ("input_time_trigger_wd1").value = datos.time_trigger_wd1;
                 document.getElementById ("input_time_trigger_wd2").value = datos.time_trigger_wd2;
                 document.getElementById ("input_time_trigger_wd3").value = datos.time_trigger_wd3;
@@ -753,7 +753,7 @@
             if(!cfg || typeof cfg !== 'object') return false;
             if(cfg.version !== 1) return false;
             const required = [
-                'baud_meter', 'serial_meter', 'apn', 'operator', 'tcp_port'
+                'meter_baudrate', 'meter_configuration', 'apn', 'operator', 'tcp_port'
             ];
             return required.every((k) => k in cfg);
         }
