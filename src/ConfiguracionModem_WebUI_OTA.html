@@ -264,8 +264,30 @@
         }
 
         .form-actions{
-            background: none !important; 
+            background: none !important;
             border: none !important;
+        }
+
+        #btnLang {
+            position: fixed;
+            top: 12px;
+            right: 16px;
+            background: #fff;
+            border: 1.5px solid var(--brand-600);
+            border-radius: 20px;
+            padding: 5px 14px;
+            color: var(--brand-600);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            z-index: 9999;
+            letter-spacing: .4px;
+            box-shadow: 0 1px 4px rgba(38,102,175,.15);
+            transition: background .2s, color .2s;
+        }
+        #btnLang:hover {
+            background: var(--brand-600);
+            color: #fff;
         }
     </style>
 </head>
@@ -282,13 +304,14 @@
             <div class="focus-box-sub">by Gatria</div>
         </div>
     </div>
-    <p class="estyle_gatria">Focus IoT by Gatria es un marca de Gatria SAS</p>
+    <button id="btnLang" title="Cambiar a Español">🇪🇸 ES</button>
+    <p class="estyle_gatria" data-i18n="tagline">Focus IoT by Gatria es un marca de Gatria SAS</p>
     <h2 class="mt-12" style="font-weight:bold">NMC Lite Modem <p id="hw_version"></p></h1>
     <p id="fw_version" class="text-center text-xs mb-1" style="font-weight:bold"></p>
 
     <form id="formConfigModem" method="post" action = "/configModem">
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Baud rate Meter:</label>
+            <label data-i18n="baud_meter">Baud rate Meter:</label>
             <select id="select_baud_meter" name="meter_baudrate" data-type="number">
                 <option value="1200">1200</option>
                 <option value="2400">2400</option>
@@ -299,64 +322,64 @@
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label >Meter Configuration:</label>
+            <label data-i18n="meter_config">Meter Configuration:</label>
             <select id="select_serial_meter" name="meter_configuration" data-type="number">
                 <option value="0">8 N 1</option>
                 <option value="1">7 E 1</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Altern APN:</label>
+            <label data-i18n="altern_apn">Altern APN:</label>
             <input type="text" id="input_alter_apn" name="alter_apn" maxlength="128" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Other Altern APN:</label>
+            <label data-i18n="other_altern_apn">Other Altern APN:</label>
             <input type="text" id="input_other_altern_apn" name="other_alter_apn" maxlength="128" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>APN:</label>
+            <label data-i18n="apn">APN:</label>
             <input type="text"id="input_apn" name="apn" maxlength="128" class="reglasInputs">
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Alter Operator:</label>
+            <label data-i18n="alter_opr">Alter Operator:</label>
             <input type="number" id="input_altern_opr" name="alter_operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Other Altern Operator:</label>
+            <label data-i18n="other_altern_opr">Other Altern Operator:</label>
             <input type="number" id ="input_other_alter_opr" name="other_alter_operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Operator:</label>
+            <label data-i18n="operator">Operator:</label>
             <input type="number" id="input_operator" name="operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>User:</label>
+            <label data-i18n="user">User:</label>
             <input type="text" id="input_user" name="user" maxlength="56" class="reglasInputs">
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Password:</label>
+            <label data-i18n="pass">Password:</label>
             <input type="text" id="input_pass" name="pass" maxlength="56" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Ping Server:</label>
+            <label data-i18n="ping_server">Ping Server:</label>
             <input type="text" id="input_ping_server" name="ping_server">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable Auth:</label>
+            <label data-i18n="enable_auth">Enable Auth:</label>
             <select id="input_enable_auth" name="enable_auth" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable Forced 3G:</label>
+            <label data-i18n="enable_forced_3g">Enable Forced 3G:</label>
             <select id="input_enable_forced_3g" name="enable_forced_3g" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option> 
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable Automatic APN:</label>
+            <label data-i18n="enable_auto_apn">Enable Automatic APN:</label>
             <select id="input_enable_automatic_apn" name="enable_automatic_apn" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">APN Automatic</option>
                 <option value="0">APN Manual</option>
@@ -364,124 +387,124 @@
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable Transparent Mode:</label>
+            <label data-i18n="enable_transparent">Enable Transparent Mode:</label>
             <select id="input_enable_transparent_mode" name="enable_transparent" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable test mode:</label>
+            <label data-i18n="enable_test_mode">Enable test mode:</label>
             <select id="input_enable_test_mode" name="enable_tmode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Mode Data:</label>
+            <label data-i18n="mode_data">Mode Data:</label>
             <select id="input_mode_data" name="mode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Data Transparent</option>
                 <option value="0">Normal mode</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable WD1:</label>
+            <label data-i18n="enable_wd1">Enable WD1:</label>
             <select id="input_enable_wd1" name="enable_wd1" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable WD2:</label>
+            <label data-i18n="enable_wd2">Enable WD2:</label>
             <select id="input_enable_wd2" name="enable_wd2" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable WD3:</label>
+            <label data-i18n="enable_wd3">Enable WD3:</label>
             <select id="input_enable_wd3" name="enable_wd3" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable IN1:</label>
+            <label data-i18n="enable_in1">Enable IN1:</label>
             <select id="input_enable_in1" name="enable_digital1" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Enable IN2:</label>
+            <label data-i18n="enable_in2">Enable IN2:</label>
             <select id="input_enable_in2" name="enable_digital2" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Meter type of port selection:</label>
+            <label data-i18n="meter_port">Meter type of port selection:</label>
             <select id="input_meter_type_port" name="meter_port_sel" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">RS485</option>
                 <option value="0">RS232</option>
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>TCP Port:</label>
+            <label data-i18n="tcp_port">TCP Port:</label>
             <input type="number" id="input_tcp_port" name="tcp_port" class="validar-rango" min="1" max="65535">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>TCP Maintenance Port:</label>
+            <label data-i18n="tcp_maint_port">TCP Maintenance Port:</label>
             <input type="number" id="input_tcp_maintance_port" name="tcp_port_maintenance" class="validar-rango" min="1" max="60000">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>TCP Timeout ( ms ):</label>
+            <label data-i18n="tcp_timeout">TCP Timeout ( ms ):</label>
             <input type="number" id="input_tcp_timeout" name="tcp_timeout" class="validar-rango" min="1" max="60000">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Socket Timeout ( ms ):</label>
+            <label data-i18n="socket_timeout">Socket Timeout ( ms ):</label>
             <input type="number" id="input_socket_timeout" name="socket_timeout" class="validar-rango" min="1" max="60000">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Time to wait meter response completed ( ms ):</label>
+            <label data-i18n="time_wait_response">Time to wait meter response completed ( ms ):</label>
             <input type="number" id="input_time_wait_response" name="time_to_wait_meter_response_ms" class="validar-rango" min="1" max="254">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Time to Trigger WD1 ( minutes ):</label>
+            <label data-i18n="time_wd1">Time to Trigger WD1 ( minutes ):</label>
             <input type="number" id="input_time_trigger_wd1" name="time_trigger_wd1" class="validar-rango" min="1" max="254">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Time to Trigger WD2 ( hours ):</label>
+            <label data-i18n="time_wd2">Time to Trigger WD2 ( hours ):</label>
             <input type="number" id="input_time_trigger_wd2" name="time_trigger_wd2"  class="validar-rango" min="1" max="254">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Time to Trigger WD3 ( minutes ):</label>
+            <label data-i18n="time_wd3">Time to Trigger WD3 ( minutes ):</label>
             <input type="number" id="input_time_trigger_wd3" name="time_trigger_wd3"  class="validar-rango" min="1" max="254">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Serial Number:</label>
+            <label data-i18n="serial_number">Serial Number:</label>
             <input type="text" id="input_serial_number" name="serial_number">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label>Key:</label>
+            <label data-i18n="key">Key:</label>
             <input type="number" id="input_key" name ="key" min="0000000" max="9999999" step="1">
         </div>
         <div class="form-actions">
-            <button type="submit" id="btnSave" class="btn-primary" disabled="false">SAVE</button>
             <input type="file" id="configFile" accept=".json" hidden>
-            <button type="button" id="btnImport" class="btn-primary">Importar configuracion</button>
-            <button id="btnExport" type="button" class="btn-primary">Exportar configuracion</button> 
+            <button type="button" id="btnImport" class="btn-primary" data-i18n="btn_import">Import configuration</button>
+            <button id="btnExport" type="button" class="btn-primary" data-i18n="btn_export">Export configuration</button> 
             <!-- <button type="button" class="btn-primary">Configuracion por defecto</button>   -->
         </div>
+        <button type="submit" id="btnSave" class="btn-primary" data-i18n="btn_save" disabled="false">SAVE</button>
     </form>
         
         <button id="btnReset" type="button" class="btn-primary">RESET</button> 
-        <button id="btnVolver" type="button" class="btn-primary">Volver</button>
+        <button id="btnVolver" type="button" class="btn-primary" data-i18n="btn_back">Back</button>
 
     <div id="espSpinnerOverlay" aria-live="polite" aria-busy="true">
         <div id="espSpinnerBox">
             <div id="espSpinnerIcon"></div>
-            <span id="espSpinnerLabel">Procesando...</span>
+            <span id="espSpinnerLabel" data-i18n="spinner_default">Procesando...</span>
         </div>
     </div>
     <script>
@@ -498,16 +521,16 @@
         const espSpinnerLabel   = document.getElementById('espSpinnerLabel');
         let espPendingOps = 0;
 
-        function showEspSpinner(message = "Procesando...") {
+        function showEspSpinner(message) {
             espPendingOps++;
-            if (espSpinnerLabel) espSpinnerLabel.textContent = message;
+            if (espSpinnerLabel) espSpinnerLabel.textContent = message ?? I18N[currentLang].spinner_default;
             if (espSpinnerOverlay) espSpinnerOverlay.style.display = 'flex';
         }
         function hideEspSpinner(){
             espPendingOps = Math.max(0, espPendingOps - 1);
             if(espPendingOps === 0 && espSpinnerOverlay){
                 espSpinnerOverlay.style.display = 'none';
-                if(espSpinnerLabel) espSpinnerLabel.textContent = "Procesando...";
+                if(espSpinnerLabel) espSpinnerLabel.textContent = I18N[currentLang].spinner_default;
             }
         }
 
@@ -527,12 +550,12 @@
 
 
         function spinnerMessageFor(path){
-            if (path === '/auth-check')  return 'Validando sesion...';
-            if (path === '/getConfig')   return 'Cargando configuracion del modem...';
-            if (path === '/configModem') return 'Guardando configuracion...';
-            if (path === '/reboot')      return 'Reiniciando dispositivo...';
-            if (path === '/auth-logout') return 'Cerrando sesion...';
-            return 'Comunicando con el ESP...';
+            if (path === '/auth-check')  return I18N[currentLang].spinner_auth_check;
+            if (path === '/getConfig')   return I18N[currentLang].spinner_get_config;
+            if (path === '/configModem') return I18N[currentLang].spinner_config_modem;
+            if (path === '/reboot')      return I18N[currentLang].spinner_reboot;
+            if (path === '/auth-logout') return I18N[currentLang].spinner_auth_logout;
+            return I18N[currentLang].spinner_esp;
         }
 
         function shouldShowSpinner(path){
@@ -555,16 +578,155 @@
             return nativeFetch(input, init).finally(hideEspSpinner);
         }
 
-        async function checkAuth() {
-            try{
-                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-                if(!r.ok){
-                    window.location.replace('/update');
-                }
-            }catch (e){
-                window.location.replace('/update');
-            } 
+        // --- i18n ---
+        const I18N = {
+            en: {
+                baud_meter:         "Baud rate Meter:",
+                meter_config:       "Meter Configuration:",
+                altern_apn:         "Backup APN:",
+                other_altern_apn:   "Tertiary APN:",
+                apn:                "Primary APN:",
+                alter_opr:          "Backup Operator:",
+                other_altern_opr:   "Tertiary Operator:",
+                operator:           "Primary Operator:",
+                user:               "User:",
+                pass:               "Password:",
+                ping_server:        "Ping Server:",
+                enable_auth:        "Authentication:",
+                enable_forced_3g:   "Forced 3G:",
+                enable_auto_apn:    "Automatic APN:",
+                enable_transparent: "Transparent Mode:",
+                enable_test_mode:   "Test mode:",
+                mode_data:          "Mode Data:",
+                enable_wd1:         "Primary Watchdog:",
+                enable_wd2:         "Secondary Watchdog:",
+                enable_wd3:         "Tertiary Watchdog:",
+                enable_in1:         "Digital Input 1:",
+                enable_in2:         "Digital Input 2:",
+                meter_port:         "Serial Interface:",
+                tcp_port:           "TCP Port:",
+                tcp_maint_port:     "TCP Maintenance Port:",
+                tcp_timeout:        "TCP Timeout ( ms ):",
+                socket_timeout:     "Socket Timeout ( ms ):",
+                time_wait_response: "Time to wait meter response completed ( ms ):",
+                time_wd1:           "Primary Watchdog Activation Time ( minutes ):",
+                time_wd2:           "Secondary Watchdog Activation Time ( hours ):",
+                time_wd3:           "Tertiary Watchdog Activation Time ( minutes ):",
+                serial_number:      "Serial Number:",
+                key:                "Key:",
+                btn_save:           "SAVE",
+                btn_import:         "Import configuration",
+                btn_export:         "Export configuration",
+                btn_back:           "Back",
+                tagline:               "Focus IoT by Gatria is a brand of Gatria SAS",
+                confirm_unsaved_exit:  "You have unsaved changes. Are you sure you want to leave?",
+                confirm_unsaved_reset: "You have unsaved changes that will be lost on reset. Reboot anyway?",
+                confirm_reset:         "Are you sure you want to reboot the device?",
+                alert_rebooting:       "Device rebooting... connection will be lost momentarily.",
+                alert_save_error:      "Error saving configuration",
+                alert_invalid_json:    "Invalid configuration file or does not match this form",
+                alert_import_ok:       "Configuration imported. Don't forget to SAVE",
+                alert_invalid_file:    "Invalid configuration file",
+                spinner_default:       "Processing...",
+                spinner_auth_check:    "Validating session...",
+                spinner_get_config:    "Loading modem configuration...",
+                spinner_config_modem:  "Saving configuration...",
+                spinner_reboot:        "Rebooting device...",
+                spinner_auth_logout:   "Closing session...",
+                spinner_esp:           "Communicating with ESP...",
+                saving:                "Saving...",
+            },
+            es: {
+                baud_meter:         "Velocidad en Baudios del Medidor:",
+                meter_config:       "Configuración del Medidor:",
+                altern_apn:         "APN de Respaldo:",
+                other_altern_apn:   "APN Terciario:",
+                apn:                "APN Principal:",
+                alter_opr:          "Operador de Respaldo:",
+                other_altern_opr:   "Operador Terciario:",
+                operator:           "Operador Principal:",
+                user:               "Usuario:",
+                pass:               "Contraseña:",
+                ping_server:        "Servidor Ping:",
+                enable_auth:        "Habilitar Autenticación:",
+                enable_forced_3g:   "Forzar 3G:",
+                enable_auto_apn:    "APN Automático:",
+                enable_transparent: "Modo Transparente:",
+                enable_test_mode:   "Modo Prueba:",
+                mode_data:          "Modo de Datos:",
+                enable_wd1:         "Watchdog Primario:",
+                enable_wd2:         "Watchdog Secundario:",
+                enable_wd3:         "Watchdog Terciario:",
+                enable_in1:         "Entrada Digital 1:",
+                enable_in2:         "Entrada Digital 2:",
+                meter_port:         "Interfaz Serial:",
+                tcp_port:           "Puerto TCP:",
+                tcp_maint_port:     "Puerto TCP Mantenimiento:",
+                tcp_timeout:        "Tiempo de Espera TCP ( ms ):",
+                socket_timeout:     "Tiempo de Espera del Socket ( ms ):",
+                time_wait_response: "Tiempo espera resp. medidor ( ms ):",
+                time_wd1:           "Tiempo activación Watchdog Primario ( min ):",
+                time_wd2:           "Tiempo activación Watchdog Secundario ( horas ):",
+                time_wd3:           "Tiempo activación Watchdog Terciario ( min ):",
+                serial_number:      "Número de Serie:",
+                key:                "Clave:",
+                btn_save:           "GUARDAR",
+                btn_import:         "Importar configuración",
+                btn_export:         "Exportar configuración",
+                btn_back:           "Volver",
+                tagline:               "Focus IoT by Gatria es una marca de Gatria SAS",
+                confirm_unsaved_exit:  "Tiene cambios sin guardar. ¿Está seguro de que quiere salir?",
+                confirm_unsaved_reset: "Tiene cambios sin guardar que se perderán al reiniciar. ¿Desea reiniciar de todos modos?",
+                confirm_reset:         "¿Está seguro de que quiere reiniciar el dispositivo?",
+                alert_rebooting:       "Dispositivo reiniciando... la conexion se perdera momentaneamente.",
+                alert_save_error:      "Error al guardar",
+                alert_invalid_json:    "Archivo de Configuración invalido o no corresponde a este formulario",
+                alert_import_ok:       "Configuracion importada al formulario. Falta Guardar",
+                alert_invalid_file:    "Archivo de configuración invalido",
+                spinner_default:       "Procesando...",
+                spinner_auth_check:    "Validando sesion...",
+                spinner_get_config:    "Cargando configuracion del modem...",
+                spinner_config_modem:  "Guardando configuracion...",
+                spinner_reboot:        "Reiniciando dispositivo...",
+                spinner_auth_logout:   "Cerrando sesion...",
+                spinner_esp:           "Comunicando con el ESP...",
+                saving:               "Guardando...",
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLang(lang) {
+            const t = I18N[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (t[key] !== undefined) el.textContent = t[key];
+            });
+            const btn = document.getElementById('btnLang');
+            if (btn) {
+                btn.textContent = lang === 'en' ? '🇪🇸 ES' : '🇬🇧 EN';
+                btn.title       = lang === 'en' ? 'Cambiar a Español' : 'Switch to English';
+            }
+            localStorage.setItem('lang', lang);
+            currentLang = lang;
         }
+
+        document.getElementById('btnLang').addEventListener('click', () => {
+            setLang(currentLang === 'en' ? 'es' : 'en');
+        });
+
+        setLang(currentLang);
+
+        // async function checkAuth() {
+        //     try{
+        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+        //         if(!r.ok){
+        //             window.location.replace('/update');
+        //         }
+        //     }catch (e){
+        //         window.location.replace('/update');
+        //     } 
+        // }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -612,7 +774,7 @@
         btnVolver.addEventListener('click', (e) => {
         e.preventDefault();
         if (!btnSave.disabled) {
-            const confirmar = confirm("Tiene cambios sin guardar. Esta seguro de que quiere salir?");
+            const confirmar = confirm(I18N[currentLang].confirm_unsaved_exit);
             if (confirmar) {
                 btnSave.disabled = true;
                 fetch('/auth-logout',{method: 'POST', cache: 'no-store'})
@@ -627,9 +789,9 @@
 
         btnReset.addEventListener('click', async() => {
         if (!btnSave.disabled) {
-            const confirmar = confirm("Tiene cambios sin guardar que se perderan al reiniciar. Desea reiniciar de todos modos?");
+            const confirmar = confirm(I18N[currentLang].confirm_unsaved_reset);
             if (!confirmar) return 
-        }else if (!confirm('Esta seguro de que quiere reiniciar el dispositivo?')) return;
+        }else if (!confirm(I18N[currentLang].confirm_reset)) return;
         try{
             btnReset.disabled = true;
             btnReset.innerText = "Reiniciando...";
@@ -637,7 +799,7 @@
             const response = await fetch('/reboot', { method: 'POST' });
         
             if (response.ok) {
-                alert("Dispositivo reiniciando... la conexion se perdera momentaneamente.");
+                alert(I18N[currentLang].alert_rebooting);
                 setTimeout(() => { window.location.reload(); }, 5000);
             }
 
@@ -668,7 +830,7 @@
             e.preventDefault();
 
             const originalText = btnSave.innerText;
-            btnSave.innerText = "Saving...";
+            btnSave.innerText = I18N[currentLang].saving;
             btnSave.disabled = true;
             
             const datosFormulario = new URLSearchParams(new FormData(formulario)); 
@@ -684,7 +846,7 @@
                     btnSave.innerText = "Saved!";
                     setTimeout(() =>{ btnSave.innerText = originalText}, 2000);
                 } else {
-                    alert("Error al guardar")
+                    alert(I18N[currentLang].alert_save_error)
                     btnSave.disabled = false;
                     btnSave.innerText = originalText;
                 }
@@ -823,14 +985,14 @@
                 const cfg = JSON.parse(text);
                 if(!isValidConfig(cfg)){
                    btnSave.disabled = true;
-                   alert('JSON invalido o no corresponde a este formulario');
+                   alert(I18N[currentLang].alert_invalid_json);
                    return;
                 } 
                 
                 applyConfigToForm(formulario, cfg);
-                alert('Configuracion importada al formulario. Falta presionar SAVE');
+                alert(I18N[currentLang].alert_import_ok);
             }catch{
-                alert('Archivo JSON invalido');
+                alert('Archivo de configuración invalido');
             }finally {
                 configFile.value = '';
             }
