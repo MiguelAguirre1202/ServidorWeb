@@ -329,6 +329,13 @@
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
+            <label data-i18n="">Meter Configuration:</label>
+            <select id="select_mux_sim" name="mux_sim" data-type="number">
+                <option value="0">SIM 1</option>
+                <option value="1">eSIM</option>
+            </select>
+        </div>
+        <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="altern_apn">Altern APN:</label>
             <input type="text" id="input_alter_apn" name="alter_apn" maxlength="128" class="reglasInputs">
         </div>
@@ -869,6 +876,7 @@
 
                 document.getElementById("select_baud_meter").value = datos.meter_baudrate;
                 document.getElementById("select_serial_meter").value = datos.meter_configuration;
+                document.getElementById("select_mux_sim").value = datos.mux_sim;
                 document.getElementById ("input_alter_apn").value = datos.alter_apn;
                 document.getElementById ("input_other_altern_apn").value = datos.other_altern_apn;
                 document.getElementById ("input_apn").value = datos.apn;

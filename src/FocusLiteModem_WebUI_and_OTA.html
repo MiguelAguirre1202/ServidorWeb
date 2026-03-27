@@ -284,6 +284,7 @@
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_port">Meter type of port selection:</span><span id="modem_meter_port_type" class="info-value"></span></div> <!-- 0: RS232; 1: RS485 -->
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_baudrate">Meter Baudrate:</span><span id="modem_meter_baudrate" class="info-value"></span></div> 
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_config">Meter Configuration:</span><span id="modem_meter_configuration" class="info-value"></span></div> <!-- 0: 8 N 1; 1: 7 E 1 -->
+                <div class="info-row"><span class="info-label" data-i18n="lbl_modem_mux_sim">Selected Sim:</span><span id="modem_mux_sim" class="info-value"></span></div>
                 <div class="info-row"><span class="info-label" data-i18n="lbl_tcp_port">TCP Port:</span><span id="modem_tcp_port" class="info-value"></span></div> 
                 <div class="info-row"><span class="info-label" data-i18n="lbl_tcp_maint_port">TCP Maintenance Port:</span><span id="modem_tcp_maintenance_port" class="info-value"></span></div> 
                 <div class="info-row"><span class="info-label" data-i18n="lbl_tcp_timeout">TCP Timeout ( ms ):</span><span id="modem_tcp_timeout" class="info-value"></span></div> 
@@ -521,6 +522,7 @@
           modem_meter_port_type: data.modem_meter_port_type,
           modem_meter_baudrate: data.modem_meter_baudrate,
           modem_meter_configuration: data.modem_meter_configuration,
+          modem_mux_sim: data.modem_mux_sim,
           modem_tcp_port: data.modem_tcp_port,
           modem_tcp_maintenance_port: data.modem_tcp_maintenance_port,
           modem_tcp_timeout: data.modem_tcp_timeout,
@@ -620,6 +622,7 @@
             lbl_meter_port:       "Serial Interface:",
             lbl_meter_baudrate:   "Meter Baudrate:",
             lbl_meter_config:     "Meter Configuration:",
+            lbl_modem_mux_sim:    "Selected Sim",
             lbl_tcp_port:         "TCP Port:",
             lbl_tcp_maint_port:   "TCP Maintenance Port:",
             lbl_tcp_timeout:      "TCP Timeout ( ms ):",
@@ -695,6 +698,7 @@
             lbl_meter_port:       "Interfaz Serial:",
             lbl_meter_baudrate:   "Baudios del Medidor:",
             lbl_meter_config:     "Configuración Medidor:",
+            lbl_modem_mux_sim:    "Sim Seleccionado:",
             lbl_tcp_port:         "Puerto TCP:",
             lbl_tcp_maint_port:   "Puerto TCP Mantenimiento:",
             lbl_tcp_timeout:      "Tiempo de espera TCP ( ms ):",
