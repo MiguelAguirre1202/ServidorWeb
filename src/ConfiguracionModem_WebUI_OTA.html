@@ -329,7 +329,7 @@
             </select>
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
-            <label data-i18n="">Meter Configuration:</label>
+            <label data-i18n="sim_selection">Select SIM:</label>
             <select id="select_mux_sim" name="mux_sim" data-type="number">
                 <option value="0">SIM 1</option>
                 <option value="1">eSIM</option>
@@ -341,15 +341,15 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="other_altern_apn">Other Altern APN:</label>
-            <input type="text" id="input_other_altern_apn" name="other_alter_apn" maxlength="128" class="reglasInputs">
+            <input type="text" id="input_other_alter_apn" name="other_alter_apn" maxlength="128" class="reglasInputs">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="apn">APN:</label>
-            <input type="text"id="input_apn" name="apn" maxlength="128" class="reglasInputs">
+            <input type="text"id="input_apn" name="apn" maxlength="128" class="regla sInputs">
         </div> 
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="alter_opr">Alter Operator:</label>
-            <input type="number" id="input_altern_opr" name="alter_operator" class="limite" data-max="48">
+            <input type="number" id="input_alter_opr" name="alter_operator" class="limite" data-max="48">
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="other_altern_opr">Other Altern Operator:</label>
@@ -590,6 +590,7 @@
             en: {
                 baud_meter:         "Baud rate Meter:",
                 meter_config:       "Meter Configuration:",
+                sim_selection:      "SIM selection:",
                 altern_apn:         "Backup APN:",
                 other_altern_apn:   "Tertiary APN:",
                 apn:                "Primary APN:",
@@ -646,6 +647,7 @@
             es: {
                 baud_meter:         "Velocidad en Baudios del Medidor:",
                 meter_config:       "Configuración del Medidor:",
+                sim_selection:      "Selección de SIM:",
                 altern_apn:         "APN de Respaldo:",
                 other_altern_apn:   "APN Terciario:",
                 apn:                "APN Principal:",
@@ -724,16 +726,16 @@
 
         setLang(currentLang);
 
-        // async function checkAuth() {
-        //     try{
-        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-        //         if(!r.ok){
-        //             window.location.replace('/update');
-        //         }
-        //     }catch (e){
-        //         window.location.replace('/update');
-        //     } 
-        // }
+        async function checkAuth() {
+            try{
+                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+                if(!r.ok){
+                    window.location.replace('/update');
+                }
+            }catch (e){
+                window.location.replace('/update');
+            } 
+        }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -878,9 +880,9 @@
                 document.getElementById("select_serial_meter").value = datos.meter_configuration;
                 document.getElementById("select_mux_sim").value = datos.mux_sim;
                 document.getElementById ("input_alter_apn").value = datos.alter_apn;
-                document.getElementById ("input_other_altern_apn").value = datos.other_altern_apn;
+                document.getElementById ("input_other_alter_apn").value = datos.other_alter_apn;
                 document.getElementById ("input_apn").value = datos.apn;
-                document.getElementById ("input_altern_opr").value = datos.alter_operator;
+                document.getElementById ("input_alter_opr").value = datos.alter_operator;
                 document.getElementById ("input_other_alter_opr").value = datos.other_alter_operator;
                 document.getElementById ("input_operator").value = datos.operator;
 
