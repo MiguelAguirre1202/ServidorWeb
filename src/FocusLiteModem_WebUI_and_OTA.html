@@ -280,7 +280,8 @@
                 <div class="info-row"><span class="info-label" data-i18n="lbl_enable_wd3">Enable WD3:</span><span id="modem_wd3_enable" class="info-value"></span></div>
                 <div class="info-row"><span class="info-label" data-i18n="lbl_enable_transparent">Enable Transparent Mode:</span><span id="modem_transparent_mode" class="info-value"></span></div>
                 <div class="info-row"><span class="info-label" data-i18n="lbl_mode_data">Selector Mode Data Transparent or Normal:</span><span id="modem_selector_mode_data" class="info-value"></span></div> <!-- 1: Data Transparent; 0: Normal mode -->
-                <div class="info-row"><span class="info-label" data-i18n="lbl_enable_auto_apn">Enable Automatic APN:</span><span id="modem_automatic_apn" class="info-value"></span></div> <!-- 0: APN Manual 1: APN Automatic; 2: APN Automatic for operator -->
+                <div class="info-row"><span class="info-label" data-i18n="lbl_enable_auto_apn">Automatic APN:</span><span id="modem_automatic_apn" class="info-value"></span></div> <!-- 0: APN Manual 1: APN Automatic; 2: APN Automatic for operator -->
+                <div class="info-row"><span class="info-label" data-i18n="lbl_enable_auto_sim">Automatic SIM:</span><span id="modem_automatic_sim" class="info-value"></span></div> <!-- 0: SIM Manual 1: SIM Automatic  -->
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_port">Meter type of port selection:</span><span id="modem_meter_port_type" class="info-value"></span></div> <!-- 0: RS232; 1: RS485 -->
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_baudrate">Meter Baudrate:</span><span id="modem_meter_baudrate" class="info-value"></span></div> 
                 <div class="info-row"><span class="info-label" data-i18n="lbl_meter_config">Meter Configuration:</span><span id="modem_meter_configuration" class="info-value"></span></div> <!-- 0: 8 N 1; 1: 7 E 1 -->
@@ -519,6 +520,7 @@
           modem_transparent_mode: data.modem_transparent_mode,
           modem_selector_mode_data: data.modem_selector_mode_data,
           modem_automatic_apn: data.modem_automatic_apn,
+          modem_automatic_sim: data.modem_automatic_sim,
           modem_meter_port_type: data.modem_meter_port_type,
           modem_meter_baudrate: data.modem_meter_baudrate,
           modem_meter_configuration: data.modem_meter_configuration,
@@ -619,6 +621,7 @@
             lbl_enable_transparent: "Transparent Mode:",
             lbl_mode_data:        "Mode Data:",
             lbl_enable_auto_apn:  "Automatic APN:",
+            lbl_enable_auto_sim:  "Automatic SIM:",
             lbl_meter_port:       "Serial Interface:",
             lbl_meter_baudrate:   "Meter Baudrate:",
             lbl_meter_config:     "Meter Configuration:",
@@ -695,6 +698,7 @@
             lbl_enable_transparent: "Modo Transparente:",
             lbl_mode_data:        "Modo de Datos:",
             lbl_enable_auto_apn:  "APN Automático:",
+            lbl_enable_auto_sim:  "SIM Automático:",
             lbl_meter_port:       "Interfaz Serial:",
             lbl_meter_baudrate:   "Baudios del Medidor:",
             lbl_meter_config:     "Configuración Medidor:",
