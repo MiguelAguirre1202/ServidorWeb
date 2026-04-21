@@ -887,19 +887,19 @@
                 const respuesta = await fetch('/getConfig');
                 const datos = await respuesta.json();
 
-                document.getElementById("select_baud_meter").value = datos.meter_baudrate;
-                document.getElementById("select_serial_meter").value = datos.meter_configuration;
-                document.getElementById("select_enable_automatic_sim").value = datos.enable_automatic_sim;
-                document.getElementById("select_mux_sim").value = datos.mux_sim;
-                document.getElementById ("input_alter_apn").value = datos.alter_apn;
-                document.getElementById ("input_other_alter_apn").value = datos.other_alter_apn;
-                document.getElementById ("input_apn").value = datos.apn;
-                document.getElementById ("input_alter_opr").value = datos.alter_operator;
-                document.getElementById ("input_other_alter_opr").value = datos.other_alter_operator;
-                document.getElementById ("input_operator").value = datos.operator;
+                document.getElementById("select_baud_meter").value              = datos.meter_baudrate;
+                document.getElementById("select_serial_meter").value            = datos.meter_configuration;
+                document.getElementById("select_enable_automatic_sim").value    = datos.enable_automatic_sim;
+                document.getElementById("select_mux_sim").value                 = datos.mux_sim;
+                document.getElementById ("input_alter_apn").value               = datos.alter_apn;
+                document.getElementById ("input_other_alter_apn").value         = datos.other_alter_apn;
+                document.getElementById ("input_apn").value                     = datos.apn;
+                document.getElementById ("input_alter_opr").value               = datos.alter_operator;
+                document.getElementById ("input_other_alter_opr").value         = datos.other_alter_operator;
+                document.getElementById ("input_operator").value                = datos.operator;
 
-                document.getElementById ("input_user").value = datos.user;
-                document.getElementById ("input_pass").value = datos.pass;
+                document.getElementById ("input_user").value                    = datos.user;
+                document.getElementById ("input_pass").value                    = datos.pass;
 
                 document.getElementById ("input_enable_auth").value = datos.enable_auth;
                 document.getElementById ("input_enable_forced_3g").value = datos.enable_forced_3g;
