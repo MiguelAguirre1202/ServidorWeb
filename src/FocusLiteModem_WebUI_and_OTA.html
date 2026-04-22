@@ -886,18 +886,18 @@
       }
 
       try{
-        // const hashedPass = await sha1Hex(pass);
-        // console.log("La contraseña en sha1:");
-        // console.log(hashedPass);
-        // const body = new URLSearchParams({ password: hashedPass }).toString();
-        const body = new URLSearchParams({ password:pass }).toString();
+        const hashedPass = await sha1Hex(pass);
+        console.log("La contraseña en sha1:");
+        console.log(hashedPass);
+        const body = new URLSearchParams({ password: hashedPass }).toString();
+        // const body = new URLSearchParams({ password:pass }).toString();
 
         const res = await fetch('/auth-config', {
           method: 'POST',
           headers: {'Content-type':'application/x-www-form-urlencoded'},
           body
         });
-        
+
         if(!res.ok){
           authError.textContent = window.I18N[window.currentLang].auth_err_wrong;
           authError.style.display = 'block';
