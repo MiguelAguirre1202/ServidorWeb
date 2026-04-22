@@ -869,12 +869,7 @@
     function closeAuthModal(){
       authModal.style.display = 'none';
     }
-
-    async function sha1Hex(str) {
-      const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(str));
-      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-    }
-
+    
     async function submitAuthConfig() {
       authError.style.display = 'none';
 
@@ -886,10 +881,6 @@
       }
 
       try{
-        const hashedPass = await sha1Hex(pass);
-        console.log("La contraseña en sha1:");
-        console.log(hashedPass);
-        // const body = new URLSearchParams({ password: hashedPass }).toString();
         const body = new URLSearchParams({ password:pass }).toString();
 
         const res = await fetch('/auth-config', {
