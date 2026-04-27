@@ -871,8 +871,8 @@
 
         function resolveDisplayedConfigKey(rawValue) {
             const rawKey = String(rawValue ?? '').trim();
-            const numericKey = sanitizeNumericConfigKey(rawKey);
-            if (numericKey) return numericKey;
+            // const numericKey = sanitizeNumericConfigKey(rawKey);
+            // if (numericKey) return numericKey;
 
             const rememberedKey = getRememberedConfigKey();
             if (rememberedKey && (!rawKey || looksLikeSha1(rawKey))) {
