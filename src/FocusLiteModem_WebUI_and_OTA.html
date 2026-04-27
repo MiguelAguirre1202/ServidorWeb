@@ -591,6 +591,7 @@
     const logoImg           = document.getElementById("logoImg");
     const espSpinnerOverlay = document.getElementById('espSpinnerOverlay');
     const espSpinnerText    = document.getElementById('espSpinnerText');
+    const CONFIG_KEY_SESSION_STORAGE = 'focuslite.configKey';
     let espPendingOps = 0;
 
 
@@ -818,6 +819,21 @@
       }
     }
 
+    function sanitizeNumericConfigKey(value) {
+      return String(value ?? '').replace(/\D/g, '').slice(0, 7);
+    }
+
+    function rememberConfigKey(value) {
+      const key = sanitizeNumericConfigKey(value);
+      try {
+        if (key) {
+          sessionStorage.setItem(CONFIG_KEY_SESSION_STORAGE, key);
+        } else {
+          sessionStorage.removeItem(CONFIG_KEY_SESSION_STORAGE);
+        }
+      } catch {}
+    }
+
     function getRequestPath(input){
       const raw = typeof input === 'string' ? input : (input && input.url ? input.url : '');
       if(!raw) return '';
@@ -902,6 +918,7 @@
           return;
         }
 
+      rememberConfigKey(pass);
       window.location.href = `/modemConfiguration?t=${encodeURIComponent(data.ticket)}`;
       }catch(e){
         authError.textContent = window.I18N[window.currentLang].auth_err_failed;

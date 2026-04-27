@@ -503,7 +503,7 @@
         </div>
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="key">Key:</label>
-            <input type="number" id="input_key" name ="key" min="0000000" max="9999999" step="1">
+            <input type="text" id="input_key" name ="key" min="0000000" max="9999999" step="1">
         </div>
         <div class="form-actions">
             <input type="file" id="configFile" accept=".json" hidden>
@@ -737,16 +737,16 @@
 
         setLang(currentLang);
 
-        async function checkAuth() {
-            try{
-                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-                if(!r.ok){
-                    window.location.replace('/update');
-                }
-            }catch (e){
-                window.location.replace('/update');
-            } 
-        }
+        // async function checkAuth() {
+        //     try{
+        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+        //         if(!r.ok){
+        //             window.location.replace('/update');
+        //         }
+        //     }catch (e){
+        //         window.location.replace('/update');
+        //     } 
+        // }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -839,10 +839,53 @@
             });
         });
 
+        const CONFIG_KEY_SESSION_STORAGE = 'focuslite.configKey';
+
+        function sanitizeNumericConfigKey(value) {
+            return String(value ?? '').replace(/\D/g, '').slice(0, 7);
+        }
+
+        function looksLikeSha1(value) {
+            return /^[a-f0-9]{40}$/i.test(String(value ?? '').trim());
+        }
+
+        function rememberConfigKey(value) {
+            const key = sanitizeNumericConfigKey(value);
+            try {
+                if (key) {
+                    sessionStorage.setItem(CONFIG_KEY_SESSION_STORAGE, key);
+                } else {
+                    sessionStorage.removeItem(CONFIG_KEY_SESSION_STORAGE);
+                }
+            } catch {}
+            return key;
+        }
+
+        function getRememberedConfigKey() {
+            try {
+                return sanitizeNumericConfigKey(sessionStorage.getItem(CONFIG_KEY_SESSION_STORAGE) || '');
+            } catch {
+                return '';
+            }
+        }
+
+        function resolveDisplayedConfigKey(rawValue) {
+            const rawKey = String(rawValue ?? '').trim();
+            const numericKey = sanitizeNumericConfigKey(rawKey);
+            if (numericKey) return numericKey;
+
+            const rememberedKey = getRememberedConfigKey();
+            if (rememberedKey && (!rawKey || looksLikeSha1(rawKey))) {
+                return rememberedKey;
+            }
+
+            return '';
+        }
+
         const inputKey = document.getElementById('input_key');
         if (inputKey) {
             inputKey.addEventListener('input', function() {
-                this.value = this.value.replace(/\D/g, '').slice(0, 7);
+                this.value = rememberConfigKey(this.value);
             });
         }
         formulario.addEventListener('submit', async(e) =>{
@@ -923,7 +966,9 @@
                 document.getElementById ("input_time_trigger_wd3").value = datos.time_trigger_wd3;
 
                 document.getElementById ("input_serial_number").value = datos.serial_number;
-                document.getElementById ("input_key").value = datos.key;
+                const displayedKey = resolveDisplayedConfigKey(datos.key);
+                document.getElementById ("input_key").value = displayedKey;
+                rememberConfigKey(displayedKey);
                 document.getElementById ("input_ping_server").value = datos.ping_server;
 
                 
