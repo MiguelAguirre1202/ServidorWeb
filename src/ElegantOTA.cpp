@@ -369,8 +369,8 @@ String ElegantOTAClass::sha1Auth(const char * password){
     snprintf(hex, sizeof(hex), "%02x", output[i]);
     hash += hex;
   }
-  // Serial.printf("SHA1: %s\n", hash.c_str());
-  Serial.printf("SHA1: %s\n", output);
+  Serial.printf("SHA1: %s\n", hash.c_str());
+  // Serial.printf("SHA1: %s\n", output);
   return hash;
   // _password = hash;
   // _authenticate = _password.length();
