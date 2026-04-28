@@ -1,5 +1,4 @@
 #include "ElegantOTA.h"
-
 #if defined(ESP32)
   #include "mbedtls/sha1.h"
 #endif
@@ -370,10 +369,7 @@ String ElegantOTAClass::sha1Auth(const char * password){
     hash += hex;
   }
   Serial.printf("SHA1: %s\n", hash.c_str());
-  // Serial.printf("SHA1: %s\n", output);
   return hash;
-  // _password = hash;
-  // _authenticate = _password.length();
 }
 #endif
 
@@ -381,9 +377,12 @@ void ElegantOTAClass::setAuth(const char * username, const char * password){
   _username = username;
   #if defined(ESP32)
   String password_hash;
-    password_hash = sha1Auth(password); 
-  #endif
+  password_hash = sha1Auth(password).c_str(); 
+  _password = password_hash;
+  #else
   _password = password;
+  #endif
+
   _authenticate = _username.length() && _password.length();
 }
 
