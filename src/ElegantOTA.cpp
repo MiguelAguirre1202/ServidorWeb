@@ -1,10 +1,17 @@
 #include "ElegantOTA.h"
 
+#if defined(ESP32)
+  #include "mbedtls/sha1.h"
+#endif
+ 
+
 ElegantOTAClass::ElegantOTAClass(){}
 
 void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username, const char * password){
   _server = server;
-
+#if defined(ESP32)
+  sha1Auth(password); 
+#endif
   setAuth(username, password);
 
   #if defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
@@ -355,6 +362,21 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #endif
 }
+#if defined(ESP32)
+void ElegantOTAClass::sha1Auth(const char * password){
+  unsigned char output[20];
+  mbedtls_sha1((const unsigned char*)password, strlen(password), output);
+  String hash = "";
+  for (int i = 0; i < 20; i++) {
+    char hex[3];
+    snprintf(hex, sizeof(hex), "%02x", output[i]);
+    hash += hex;
+  }
+  Serial.printf("SHA1: %s\n", hash.c_str());
+  // _password = hash;
+  // _authenticate = _password.length();
+}
+#endif
 
 void ElegantOTAClass::setAuth(const char * username, const char * password){
   _username = username;
