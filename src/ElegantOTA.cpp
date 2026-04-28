@@ -9,9 +9,6 @@ ElegantOTAClass::ElegantOTAClass(){}
 
 void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username, const char * password){
   _server = server;
-#if defined(ESP32)
-  sha1Auth(password); 
-#endif
   setAuth(username, password);
 
   #if defined(TARGET_RP2040) || defined(TARGET_RP2350) || defined(PICO_RP2040) || defined(PICO_RP2350)
@@ -363,7 +360,7 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
   #endif
 }
 #if defined(ESP32)
-void ElegantOTAClass::sha1Auth(const char * password){
+String ElegantOTAClass::sha1Auth(const char * password){
   unsigned char output[20];
   mbedtls_sha1((const unsigned char*)password, strlen(password), output);
   String hash = "";
@@ -372,7 +369,9 @@ void ElegantOTAClass::sha1Auth(const char * password){
     snprintf(hex, sizeof(hex), "%02x", output[i]);
     hash += hex;
   }
-  Serial.printf("SHA1: %s\n", hash.c_str());
+  // Serial.printf("SHA1: %s\n", hash.c_str());
+  Serial.printf("SHA1: %s\n", output);
+  return hash;
   // _password = hash;
   // _authenticate = _password.length();
 }
@@ -380,6 +379,10 @@ void ElegantOTAClass::sha1Auth(const char * password){
 
 void ElegantOTAClass::setAuth(const char * username, const char * password){
   _username = username;
+  #if defined(ESP32)
+  String password_hash;
+    password_hash = sha1Auth(password); 
+  #endif
   _password = password;
   _authenticate = _username.length() && _password.length();
 }

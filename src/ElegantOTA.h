@@ -113,7 +113,7 @@ class ElegantOTAClass{
     void begin(ELEGANTOTA_WEBSERVER *server, const char * username = "", const char * password = "");
 
     void setAuth(const char * username, const char * password);
-    void sha1Auth(const char * password);
+    String sha1Auth(const char * password);
     void clearAuth();
     void setAutoReboot(bool enable);
     void loop();
