@@ -423,7 +423,7 @@ bool ElegantOTAClass::authenticateSha1() {
   
   size_t decodedLen = 0;
   uint8_t decoded[128]= {0};
-  if(mbedtls_base64_decode(decoded, sizeof(decoded) -1, &decodedLen, (const unsigned char*)encoded.c_str(), encoded.length() != 0)){
+  if(mbedtls_base64_decode(decoded, sizeof(decoded) - 1, &decodedLen, (const unsigned char*)encoded.c_str(), encoded.length()) != 0){
     Serial.println("Base64 decoding failed");
     return false;
   } 
