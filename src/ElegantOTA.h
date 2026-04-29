@@ -113,7 +113,10 @@ class ElegantOTAClass{
     void begin(ELEGANTOTA_WEBSERVER *server, const char * username = "", const char * password = "");
 
     void setAuth(const char * username, const char * password);
+    #if defined(ESP32)
     String sha1Auth(const char * password);
+    bool authenticateSha1();
+    #endif
     void clearAuth();
     void setAutoReboot(bool enable);
     void loop();

@@ -1,6 +1,7 @@
 #include "ElegantOTA.h"
 #if defined(ESP32)
   #include "mbedtls/sha1.h"
+  #include "mbedtls/base64.h" 
 #endif
  
 
@@ -32,9 +33,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #else
     _server->on("/update", HTTP_GET, [&](){
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        return _server->requestAuthentication();
+      }
+      #else
       if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
         return _server->requestAuthentication();
       }
+      #endif
       _server->sendHeader("Content-Encoding", "gzip");
       _server->send_P(200, "text/html", (const char*)ELEGANT_HTML, sizeof(ELEGANT_HTML));
     });
@@ -55,9 +62,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #else
     _server->on("/modemConfiguration", HTTP_GET, [&](){
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        return _server->requestAuthentication();
+      }
+      #else
       if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
         return _server->requestAuthentication();
       }
+      #endif
       _server->sendHeader("Content-Encoding", "gzip");
       _server->send_P(200, "text/html", (const char*)CONFIG_MODEM_HTML, sizeof(CONFIG_MODEM_HTML));
     });
@@ -155,9 +168,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #else
     _server->on("/ota/start", HTTP_GET, [&]() {
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        return _server->requestAuthentication();
+      }
+      #else
       if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
         return _server->requestAuthentication();
       }
+      #endif
 
       // Get header x-ota-mode value, if present
       OTA_Mode mode = OTA_MODE_FIRMWARE;
@@ -301,9 +320,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #else
     _server->on("/ota/upload", HTTP_POST, [&](){
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        return _server->requestAuthentication();
+      }
+      #else
       if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
         return _server->requestAuthentication();
       }
+      #endif
       // Post-OTA update callback
       if (postUpdateCallback != NULL) postUpdateCallback(!Update.hasError());
       _server->sendHeader("Connection", "close");
@@ -319,11 +344,18 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       // Actual OTA Download
       HTTPUpload& upload = _server->upload();
       if (upload.status == UPLOAD_FILE_START) {
-        // Check authentication
-        if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
-          ELEGANTOTA_DEBUG_MSG("Authentication Failed on UPLOAD_FILE_START\n");
-          return;
-        }
+      // Check authentication
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        ELEGANTOTA_DEBUG_MSG("Authentication Failed on UPLOAD_FILE_START\n");
+        return;
+      }
+      #else
+      if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
+        ELEGANTOTA_DEBUG_MSG("Authentication Failed on UPLOAD_FILE_START\n");
+        return;
+      }
+      #endif
         Serial.printf("Update Received: %s\n", upload.filename.c_str());
         _current_progress_size = 0;
       } else if (upload.status == UPLOAD_FILE_WRITE) {
@@ -358,7 +390,7 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
     });
   #endif
 }
-#if defined(ESP32)
+#if defined(ESP32) && ELEGANTOTA_USE_ASYNC_WEBSERVER == 0
 String ElegantOTAClass::sha1Auth(const char * password){
   unsigned char output[20];
   mbedtls_sha1((const unsigned char*)password, strlen(password), output);
@@ -371,18 +403,49 @@ String ElegantOTAClass::sha1Auth(const char * password){
   Serial.printf("SHA1: %s\n", hash.c_str());
   return hash;
 }
+
+bool ElegantOTAClass::authenticateSha1() {
+
+  if(!_server->hasHeader("Authorization")) {
+    Serial.println("No auth header");
+    return false;
+  }
+
+  String authHeader = _server->header("Authorization");
+
+  if (!authHeader.startsWith("Basic ")){
+    Serial.println("Invalid auth header");
+    return false;
+  } 
+
+  String encoded = authHeader.substring(6);
+  encoded.trim();
+  
+  size_t decodedLen = 0;
+  uint8_t decoded[128]= {0};
+  if(mbedtls_base64_decode(decoded, sizeof(decoded) -1, &decodedLen, (const unsigned char*)encoded.c_str(), encoded.length() != 0)){
+    Serial.println("Base64 decoding failed");
+    return false;
+  } 
+  decoded[decodedLen] = '\0';
+
+  String credentials = String((char*)decoded);
+  int separatorIndex = credentials.indexOf(':');
+  if (separatorIndex < 0){
+    Serial.println("Invalid credentials format");
+    return false;
+  }
+
+  String username = credentials.substring(0, separatorIndex);
+  String password = credentials.substring(separatorIndex + 1);
+
+  return (username == _username) && (sha1Auth(password.c_str()) == _password);
+}
 #endif
 
 void ElegantOTAClass::setAuth(const char * username, const char * password){
   _username = username;
-  // #if defined(ESP32)
-  // String password_hash;
-  // password_hash = sha1Auth(password).c_str(); 
-  // _password = password_hash;
-  // #else
   _password = password;
-  // #endif
-
   _authenticate = _username.length() && _password.length();
 }
 
