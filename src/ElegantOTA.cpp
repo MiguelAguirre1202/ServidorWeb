@@ -400,12 +400,10 @@ String ElegantOTAClass::sha1Auth(const char * password){
     snprintf(hex, sizeof(hex), "%02x", output[i]);
     hash += hex;
   }
-  Serial.printf("SHA1: %s\n", hash.c_str());
   return hash;
 }
 
 bool ElegantOTAClass::authenticateSha1() {
-
   if(!_server->hasHeader("Authorization")) {
     Serial.println("No auth header");
     return false;
