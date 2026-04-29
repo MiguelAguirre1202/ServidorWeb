@@ -375,13 +375,13 @@ String ElegantOTAClass::sha1Auth(const char * password){
 
 void ElegantOTAClass::setAuth(const char * username, const char * password){
   _username = username;
-  #if defined(ESP32)
-  String password_hash;
-  password_hash = sha1Auth(password).c_str(); 
-  _password = password_hash;
-  #else
+  // #if defined(ESP32)
+  // String password_hash;
+  // password_hash = sha1Auth(password).c_str(); 
+  // _password = password_hash;
+  // #else
   _password = password;
-  #endif
+  // #endif
 
   _authenticate = _username.length() && _password.length();
 }
