@@ -431,14 +431,12 @@ bool ElegantOTAClass::authenticateSha1() {
   int separatorIndex = credentials.indexOf(':');
   if (separatorIndex < 0){
     Serial.println("Invalid credentials format");
-    Serial.printf("Credentials is: %s. SeparadorIndex is: %d \n", credentials, separatorIndex);
     return false;
   }
 
   String username = credentials.substring(0, separatorIndex);
   String password = credentials.substring(separatorIndex + 1);
 
-  Serial.printf("Decoded credentials - Username: %s, Password: %s\n", username.c_str(), password.c_str());
   
   return (username == _username) && (sha1Auth(password.c_str()) == _password);
 }
