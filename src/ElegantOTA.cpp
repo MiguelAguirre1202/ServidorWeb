@@ -75,6 +75,37 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       _server->send_P(200, "text/html", (const char*)CONFIG_MODEM_HTML, sizeof(CONFIG_MODEM_HTML));
     });
   #endif
+  
+  
+  #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
+    _server->on("/meterData", HTTP_GET, [&](AsyncWebServerRequest *request){
+      if(_authenticate && !request->authenticate(_username.c_str(), _password.c_str())){
+        return request->requestAuthentication();
+      }
+      #if defined(ASYNCWEBSERVER_VERSION) && ASYNCWEBSERVER_VERSION_MAJOR > 2  // This means we are using recommended fork of AsyncWebServer
+        AsyncWebServerResponse *response = request->beginResponse(200, "text/html", METER_DATA, sizeof(METER_DATA));
+      #else
+        AsyncWebServerResponse *response = request->beginResponse_P(200, "text/html", METER_DATA, sizeof(METER_DATA));
+      #endif
+      response->addHeader("Content-Encoding", "gzip");
+      request->send(response);
+    });
+  #else
+    _server->on("/meterData", HTTP_GET, [&](){
+      #if defined(ESP32)
+      if (_authenticate && !authenticateSha1()) {
+        return _server->requestAuthentication();
+      }
+      #else
+      if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
+        return _server->requestAuthentication();
+      }
+      #endif
+      _server->sendHeader("Content-Encoding", "gzip");
+      _server->send_P(200, "text/html", (const char*)METER_DATA, sizeof(METER_DATA));
+    });
+  #endif
+  
 
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1
     _server->on("/ota/start", HTTP_GET, [&](AsyncWebServerRequest *request) {
