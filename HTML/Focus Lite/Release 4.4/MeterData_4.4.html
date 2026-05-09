@@ -212,18 +212,18 @@
             </thead>
             <tbody>
               <tr>
-                <td>Va</td>
-                <td class="value-cell"><span id="meter_va">—</span></td>
+                <td>V1</td>
+                <td class="value-cell"><span id="meter_v1">—</span></td>
                 <td class="unit-cell">V</td>
               </tr>
               <tr>
-                <td>Vb</td>
-                <td class="value-cell"><span id="meter_vb">—</span></td>
+                <td>V2</td>
+                <td class="value-cell"><span id="meter_v2">—</span></td>
                 <td class="unit-cell">V</td>
               </tr>
               <tr>
-                <td>Vc</td>
-                <td class="value-cell"><span id="meter_vc">—</span></td>
+                <td>V3</td>
+                <td class="value-cell"><span id="meter_v3">—</span></td>
                 <td class="unit-cell">V</td>
               </tr>
               <tr>
@@ -463,9 +463,9 @@
         document.getElementById('meter_freq').textContent           = fmt(d.freq, 2);
         document.getElementById('meter_pf').textContent             = fmt(d.power_factor, 3);
 
-        document.getElementById('meter_va').textContent  = fmt(d.voltage_a);
-        document.getElementById('meter_vb').textContent  = fmt(d.voltage_b);
-        document.getElementById('meter_vc').textContent  = fmt(d.voltage_c);
+        document.getElementById('meter_v1').textContent  = fmt(d.voltage_1);
+        document.getElementById('meter_v2').textContent  = fmt(d.voltage_2);
+        document.getElementById('meter_v3').textContent  = fmt(d.voltage_3);
         document.getElementById('meter_vab').textContent = fmt(d.voltage_ab);
         document.getElementById('meter_vbc').textContent = fmt(d.voltage_bc);
         document.getElementById('meter_vca').textContent = fmt(d.voltage_ca);
