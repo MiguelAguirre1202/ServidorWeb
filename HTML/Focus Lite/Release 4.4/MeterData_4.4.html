@@ -488,7 +488,7 @@
         document.getElementById('errorPanel').style.display = 'none';
         document.getElementById('dataContent').style.display = 'block';
         try {
-          const res = await fetch('/meterData');
+          const res = await fetch('/GetMeterData');
           if (!res.ok) throw new Error('HTTP ' + res.status);
           const data = await res.json();
           populateData(data);
