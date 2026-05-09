@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gatria SAS - Meter Data</title>
+
+    <style>
+      *,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content: ""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal}hr{height:0;color:inherit;border-top-width:1px}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,[type=button],[type=reset],[type=submit]{-webkit-appearance:button;background-color:transparent;background-image:none}img,svg,video,canvas,audio,iframe,embed,object{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]{display:none}*,:before,:after{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-scroll-snap-strictness: proximity;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000}
+      .flex{display:flex}.hidden{display:none}.flex-col{flex-direction:column}.flex-row{flex-direction:row}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.w-full{width:100%}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.mt-10{margin-top:2.5rem}.mt-12{margin-top:3rem}.mb-2{margin-bottom:.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-10{margin-bottom:2.5rem}.mb-16{margin-bottom:4rem}.ml-2{margin-left:.5rem}.mr-2{margin-right:.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.p-3{padding:.75rem}.text-center{text-align:center}.text-xs{font-size:.75rem;line-height:1rem}.text-sm{font-size:.875rem;line-height:1.25rem}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-gray-200{--tw-border-opacity: 1;border-color:rgb(229 231 235 / var(--tw-border-opacity))}.bg-white{--tw-bg-opacity: 1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-gray-50{--tw-bg-opacity: 1;background-color:rgb(249 250 251 / var(--tw-bg-opacity))}.bg-gray-200{--tw-bg-opacity: 1;background-color:rgb(229 231 235 / var(--tw-bg-opacity))}.bg-blue-600{--tw-bg-opacity: 1;background-color:rgb(37 99 235 / var(--tw-bg-opacity))}.text-gray-700{--tw-text-opacity: 1;color:rgb(55 65 81 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity: 1;color:rgb(17 24 39 / var(--tw-text-opacity))}.text-green-500{--tw-text-opacity: 1;color:rgb(34 197 94 / var(--tw-text-opacity))}.text-red-500{--tw-text-opacity: 1;color:rgb(239 68 68 / var(--tw-text-opacity))}.text-yellow-500{--tw-text-opacity: 1;color:rgb(234 179 8 / var(--tw-text-opacity))}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.opacity-60{opacity:.6}.transition-colors{transition-property:color,background-color,border-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.hover\:bg-gray-200:hover{--tw-bg-opacity: 1;background-color:rgb(229 231 235 / var(--tw-bg-opacity))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-4:focus{--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(4px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow, 0 0 #0000)}.focus\:ring-gray-300:focus{--tw-ring-opacity: 1;--tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity))}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}
+
+      .text-white-button{color:#fff !important;}
+      .hover\:bg-blue-500:hover{--tw-bg-opacity: 0.8;background-color:rgb(37 99 235 / var(--tw-bg-opacity))}
+      .blueGatria{border-width:2px;border-color:#99b8d6;border-radius:2px;}
+      .back_ground_gatria{background-color:rgb(38,102,175);border-radius:2px;}
+      .estyle_gatria{font-weight:bold;color:rgb(38,102,175);font-size:small;}
+
+      body { margin:0; line-height:inherit; }
+
+      .focus-brand {
+        display:flex; align-items:center; justify-content:center;
+        gap:24px; flex-wrap:wrap; margin-bottom:8px;
+      }
+      .focus-cloud { width:120px; height:auto; }
+      .focus-word {
+        margin:0; color:#2666af; font-size:52px;
+        font-weight:100; letter-spacing:0.1em;
+      }
+      .focus-box {
+        border:3px solid #2666af; padding:8px 14px 10px;
+        color:#2666af; line-height:1;
+      }
+      .focus-box-main { font-size:64px; font-weight:700; }
+      .focus-box-sub  { font-size:28px; font-weight:600; margin-top:6px; }
+
+      #btnLang {
+        position:fixed; top:12px; right:16px;
+        background:#fff; border:1.5px solid #2666af; border-radius:20px;
+        padding:5px 14px; color:#2666af; font-weight:700; font-size:13px;
+        cursor:pointer; z-index:9999; letter-spacing:.4px;
+        box-shadow:0 1px 4px rgba(38,102,175,.15);
+        transition:background .2s, color .2s;
+      }
+      #btnLang:hover { background:#2666af; color:#fff; }
+
+      /* ── Data tables ── */
+      .section-card {
+        border:2px solid #99b8d6; border-radius:4px;
+        background:#fff; overflow:hidden;
+      }
+      .section-header {
+        background:rgb(38,102,175); color:#fff;
+        padding:8px 16px; font-weight:700; font-size:14px;
+        display:flex; align-items:center; gap:8px;
+      }
+      .data-table {
+        width:100%; border-collapse:collapse; font-size:13px;
+      }
+      .data-table th {
+        background:#f0f5fb; color:#2666af;
+        padding:7px 14px; text-align:left;
+        font-weight:700; font-size:11px;
+        text-transform:uppercase; letter-spacing:.06em;
+        border-bottom:1px solid #d1dce9;
+      }
+      .data-table td {
+        padding:7px 14px;
+        border-bottom:1px solid rgba(176,179,184,.25);
+        color:#111827;
+      }
+      .data-table tr:last-child td { border-bottom:none; }
+      .data-table tr:nth-child(even) td { background:#f8fafc; }
+      .value-cell {
+        font-weight:600; text-align:right; color:#2666af;
+        font-variant-numeric:tabular-nums;
+      }
+      .unit-cell {
+        color:#6b7280; font-size:11px; text-align:left;
+        padding-left:4px;
+      }
+      .timestamp-badge {
+        display:inline-flex; align-items:center; gap:6px;
+        background:#f0f5fb; border:1px solid #99b8d6;
+        border-radius:20px; padding:4px 12px;
+        font-size:12px; color:#2666af; font-weight:600;
+      }
+      .serial-badge {
+        display:inline-flex; align-items:center; gap:6px;
+        background:#2666af; color:#fff;
+        border-radius:20px; padding:4px 14px;
+        font-size:13px; font-weight:700; letter-spacing:.04em;
+      }
+      .status-row {
+        display:flex; flex-wrap:wrap; gap:12px;
+        align-items:center; justify-content:center;
+        padding:14px 16px;
+      }
+      .refresh-btn {
+        display:flex; align-items:center; gap:6px;
+        background:#f0f5fb; border:1.5px solid #2666af; border-radius:20px;
+        padding:5px 14px; color:#2666af; font-weight:700; font-size:13px;
+        cursor:pointer; transition:background .2s, color .2s;
+      }
+      .refresh-btn:hover { background:#2666af; color:#fff; }
+      .no-data-msg {
+        padding:18px; text-align:center;
+        color:#9ca3af; font-size:13px; font-style:italic;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white px-6">
+    <div class="flex flex-col items-center mt-12 mb-16">
+
+      <!-- Header / Branding -->
+      <div class="focus-brand">
+        <img id="logoImg" class="focus-cloud" alt="Logo Gatria">
+        <h1 class="focus-word">F O C U S</h1>
+        <div class="focus-box">
+          <div class="focus-box-main">IoT</div>
+          <div class="focus-box-sub">by Gatria</div>
+        </div>
+      </div>
+
+      <button id="btnLang" title="Cambiar a Español">🇪🇸 ES</button>
+      <p class="estyle_gatria" data-i18n="tagline">Focus IoT by Gatria es una marca de Gatria SAS</p>
+      <h1 class="mt-6" style="font-weight:bold;" data-i18n="page_title">Meter Data</h1>
+      <p class="text-center text-xs mb-1" style="font-weight:bold;" id="fw_version"></p>
+
+      <!-- Back + Refresh controls -->
+      <div class="flex flex-row gap-3 mt-4 mb-2">
+        <button type="button" id="btnBack"
+          class="bg-gray-50 border border-gray-200 hover:bg-gray-200 text-gray-700 text-xs focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full px-4 py-2 flex flex-row gap-2 items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+          </svg>
+          <span data-i18n="btn_back">Back</span>
+        </button>
+        <button type="button" id="btnRefresh" class="refresh-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+            <path d="M8 16H3v5"/>
+          </svg>
+          <span data-i18n="btn_refresh">Refresh</span>
+        </button>
+      </div>
+
+      <!-- Main content area -->
+      <div id="dataContent" style="width:100%; max-width:520px;">
+
+        <!-- General Info -->
+        <div class="section-card mb-4">
+          <div class="section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/>
+            </svg>
+            <span data-i18n="section_general">General Information</span>
+          </div>
+          <div class="status-row">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;" data-i18n="lbl_serial">Serial Number</span>
+              <span id="meter_serial" class="serial-badge">—</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;" data-i18n="lbl_timestamp">Last Reading</span>
+              <span id="meter_timestamp" class="timestamp-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span id="meter_timestamp_val">—</span>
+              </span>
+            </div>
+          </div>
+          <table class="data-table">
+            <tbody>
+              <tr>
+                <td data-i18n="lbl_freq">Frequency</td>
+                <td class="value-cell"><span id="meter_freq">—</span></td>
+                <td class="unit-cell">Hz</td>
+              </tr>
+              <tr>
+                <td data-i18n="lbl_power_factor">Power Factor</td>
+                <td class="value-cell"><span id="meter_pf">—</span></td>
+                <td class="unit-cell"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Voltages -->
+        <div class="section-card mb-4">
+          <div class="section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+            <span data-i18n="section_voltages">Voltages</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-i18n="th_phase">Phase</th>
+                <th style="text-align:right;" data-i18n="th_value">Value</th>
+                <th data-i18n="th_unit">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Va</td>
+                <td class="value-cell"><span id="meter_va">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+              <tr>
+                <td>Vb</td>
+                <td class="value-cell"><span id="meter_vb">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+              <tr>
+                <td>Vc</td>
+                <td class="value-cell"><span id="meter_vc">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+              <tr>
+                <td>Vab</td>
+                <td class="value-cell"><span id="meter_vab">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+              <tr>
+                <td>Vbc</td>
+                <td class="value-cell"><span id="meter_vbc">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+              <tr>
+                <td>Vca</td>
+                <td class="value-cell"><span id="meter_vca">—</span></td>
+                <td class="unit-cell">V</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Currents -->
+        <div class="section-card mb-4">
+          <div class="section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <span data-i18n="section_currents">Currents</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-i18n="th_phase">Phase</th>
+                <th style="text-align:right;" data-i18n="th_value">Value</th>
+                <th data-i18n="th_unit">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ia</td>
+                <td class="value-cell"><span id="meter_ia">—</span></td>
+                <td class="unit-cell">A</td>
+              </tr>
+              <tr>
+                <td>Ib</td>
+                <td class="value-cell"><span id="meter_ib">—</span></td>
+                <td class="unit-cell">A</td>
+              </tr>
+              <tr>
+                <td>Ic</td>
+                <td class="value-cell"><span id="meter_ic">—</span></td>
+                <td class="unit-cell">A</td>
+              </tr>
+              <tr>
+                <td>In</td>
+                <td class="value-cell"><span id="meter_in">—</span></td>
+                <td class="unit-cell">A</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Phase Angles -->
+        <div class="section-card mb-4">
+          <div class="section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a10 10 0 0 1 7.07 17.07"/>
+              <path d="M12 12 8 8"/>
+            </svg>
+            <span data-i18n="section_angles">Phase Angles</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th data-i18n="th_signal">Signal</th>
+                <th style="text-align:right;" data-i18n="th_angle">Angle</th>
+                <th data-i18n="th_unit">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>∠ Va</td>
+                <td class="value-cell"><span id="angle_va">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+              <tr>
+                <td>∠ Vb</td>
+                <td class="value-cell"><span id="angle_vb">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+              <tr>
+                <td>∠ Vc</td>
+                <td class="value-cell"><span id="angle_vc">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+              <tr>
+                <td>∠ Ia</td>
+                <td class="value-cell"><span id="angle_ia">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+              <tr>
+                <td>∠ Ib</td>
+                <td class="value-cell"><span id="angle_ib">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+              <tr>
+                <td>∠ Ic</td>
+                <td class="value-cell"><span id="angle_ic">—</span></td>
+                <td class="unit-cell">°</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /dataContent -->
+
+      <!-- Error panel -->
+      <div id="errorPanel" style="display:none; width:100%; max-width:520px;">
+        <div style="padding:24px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:12px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <path d="M12 9v4"/><path d="M12 17h.01"/>
+          </svg>
+          <p id="errorMsg" style="font-size:14px; color:#374151;" data-i18n="err_no_data">No meter data available</p>
+          <p style="font-size:12px; color:#9ca3af;" data-i18n="err_no_data_hint">Make sure the meter is connected and communication is working.</p>
+        </div>
+      </div>
+
+    </div><!-- /flex col -->
+
+    <!-- Spinner overlay -->
+    <div id="spinnerOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.20); z-index:10001; align-items:center; justify-content:center;">
+      <div style="background:#fff; border:1px solid rgba(176,179,184,.6); border-radius:10px; padding:12px 16px; display:flex; align-items:center; gap:10px;">
+        <div class="animate-spin" style="width:24px; height:24px; border:3px solid #d1d5db; border-top-color:#2666af; border-radius:9999px;"></div>
+        <span id="spinnerText" style="font-size:13px; font-weight:600; color:#111827;" data-i18n="spinner_loading">Loading data...</span>
+      </div>
+    </div>
+
+    <script>
+      const I18N = {
+        en: {
+          tagline:          "Focus IoT by Gatria is a brand of Gatria SAS",
+          page_title:       "Meter Data",
+          btn_back:         "Back",
+          btn_refresh:      "Refresh",
+          section_general:  "General Information",
+          lbl_serial:       "Serial Number",
+          lbl_timestamp:    "Last Reading",
+          lbl_freq:         "Frequency",
+          lbl_power_factor: "Power Factor",
+          section_voltages: "Voltages",
+          section_currents: "Currents",
+          section_angles:   "Phase Angles",
+          th_phase:         "Phase",
+          th_signal:        "Signal",
+          th_value:         "Value",
+          th_angle:         "Angle",
+          th_unit:          "Unit",
+          err_no_data:      "No meter data available",
+          err_no_data_hint: "Make sure the meter is connected and communication is working.",
+          spinner_loading:  "Loading data...",
+        },
+        es: {
+          tagline:          "Focus IoT by Gatria es una marca de Gatria SAS",
+          page_title:       "Datos del Medidor",
+          btn_back:         "Volver",
+          btn_refresh:      "Actualizar",
+          section_general:  "Información General",
+          lbl_serial:       "Número Serial",
+          lbl_timestamp:    "Última Lectura",
+          lbl_freq:         "Frecuencia",
+          lbl_power_factor: "Factor de Potencia",
+          section_voltages: "Voltajes",
+          section_currents: "Corrientes",
+          section_angles:   "Ángulos de Fase",
+          th_phase:         "Fase",
+          th_signal:        "Señal",
+          th_value:         "Valor",
+          th_angle:         "Ángulo",
+          th_unit:          "Unidad",
+          err_no_data:      "No hay datos del medidor disponibles",
+          err_no_data_hint: "Verifique que el medidor esté conectado y la comunicación esté funcionando.",
+          spinner_loading:  "Cargando datos...",
+        }
+      };
+
+      let currentLang = localStorage.getItem('lang') || 'en';
+
+      function applyI18n(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (I18N[lang] && I18N[lang][key]) el.textContent = I18N[lang][key];
+        });
+        const btn = document.getElementById('btnLang');
+        if (btn) {
+          btn.textContent = lang === 'en' ? '🇪🇸 ES' : '🇬🇧 EN';
+          btn.title       = lang === 'en' ? 'Cambiar a Español' : 'Switch to English';
+        }
+        localStorage.setItem('lang', lang);
+        currentLang = lang;
+      }
+
+      document.getElementById('btnLang').addEventListener('click', () => {
+        applyI18n(currentLang === 'en' ? 'es' : 'en');
+      });
+
+      document.getElementById('btnBack').addEventListener('click', () => {
+        window.location.href = '/update';
+      });
+
+      function showSpinner() {
+        const ov = document.getElementById('spinnerOverlay');
+        const tx = document.getElementById('spinnerText');
+        if (tx) tx.textContent = I18N[currentLang].spinner_loading;
+        if (ov) ov.style.display = 'flex';
+      }
+
+      function hideSpinner() {
+        const ov = document.getElementById('spinnerOverlay');
+        if (ov) ov.style.display = 'none';
+      }
+
+      function fmt(val, decimals) {
+        if (val === null || val === undefined || val === '') return '—';
+        const n = parseFloat(val);
+        if (isNaN(n)) return String(val);
+        return n.toFixed(decimals !== undefined ? decimals : 2);
+      }
+
+      function populateData(d) {
+        document.getElementById('meter_serial').textContent         = d.serial      ?? '—';
+        document.getElementById('meter_timestamp_val').textContent  = d.timestamp   ?? '—';
+        document.getElementById('meter_freq').textContent           = fmt(d.freq, 2);
+        document.getElementById('meter_pf').textContent             = fmt(d.power_factor, 3);
+
+        document.getElementById('meter_va').textContent  = fmt(d.voltage_a);
+        document.getElementById('meter_vb').textContent  = fmt(d.voltage_b);
+        document.getElementById('meter_vc').textContent  = fmt(d.voltage_c);
+        document.getElementById('meter_vab').textContent = fmt(d.voltage_ab);
+        document.getElementById('meter_vbc').textContent = fmt(d.voltage_bc);
+        document.getElementById('meter_vca').textContent = fmt(d.voltage_ca);
+
+        document.getElementById('meter_ia').textContent = fmt(d.current_a, 3);
+        document.getElementById('meter_ib').textContent = fmt(d.current_b, 3);
+        document.getElementById('meter_ic').textContent = fmt(d.current_c, 3);
+        document.getElementById('meter_in').textContent = fmt(d.current_n, 3);
+
+        document.getElementById('angle_va').textContent = fmt(d.angle_va, 2);
+        document.getElementById('angle_vb').textContent = fmt(d.angle_vb, 2);
+        document.getElementById('angle_vc').textContent = fmt(d.angle_vc, 2);
+        document.getElementById('angle_ia').textContent = fmt(d.angle_ia, 2);
+        document.getElementById('angle_ib').textContent = fmt(d.angle_ib, 2);
+        document.getElementById('angle_ic').textContent = fmt(d.angle_ic, 2);
+      }
+
+      async function loadMeterData() {
+        showSpinner();
+        document.getElementById('errorPanel').style.display = 'none';
+        document.getElementById('dataContent').style.display = 'block';
+        try {
+          const res = await fetch('/meterData');
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          const data = await res.json();
+          populateData(data);
+        } catch (e) {
+          document.getElementById('dataContent').style.display = 'none';
+          document.getElementById('errorPanel').style.display  = 'block';
+        } finally {
+          hideSpinner();
+        }
+      }
+
+      document.getElementById('btnRefresh').addEventListener('click', loadMeterData);
+
+      // Logo
+      const imgClaro = "data:image/png;base64,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";
+      document.getElementById('logoImg').src = imgClaro;
+
+      // Init
+      applyI18n(currentLang);
+      loadMeterData();
+    </script>
+  </body>
+</html>
