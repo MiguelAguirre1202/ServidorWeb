@@ -164,7 +164,11 @@
           <div class="status-row">
             <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
               <span style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;" data-i18n="lbl_serial">Serial Number</span>
-              <span id="meter_serial" class="serial-badge">—</span>
+              <span id="meter_serial" class="timestamp-badge">—</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;" data-i18n="lbl_name_meter">Name meter</span>
+              <span id="meter_name" class="serial-badge">—</span>
             </div>
             <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
               <span style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;" data-i18n="lbl_timestamp">Last Reading</span>
@@ -179,16 +183,16 @@
           </div>
           <table class="data-table">
             <tbody>
-              <tr>
+              <!-- <tr>
                 <td data-i18n="lbl_freq">Frequency</td>
                 <td class="value-cell"><span id="meter_freq">—</span></td>
                 <td class="unit-cell">Hz</td>
-              </tr>
-              <tr>
+              </tr> -->
+              <!-- <tr>
                 <td data-i18n="lbl_power_factor">Power Factor</td>
                 <td class="value-cell"><span id="meter_pf">—</span></td>
                 <td class="unit-cell"></td>
-              </tr>
+              </tr> -->
             </tbody>
           </table>
         </div>
@@ -224,21 +228,6 @@
               <tr>
                 <td>V3</td>
                 <td class="value-cell"><span id="meter_v3">—</span></td>
-                <td class="unit-cell">V</td>
-              </tr>
-              <tr>
-                <td>Vab</td>
-                <td class="value-cell"><span id="meter_vab">—</span></td>
-                <td class="unit-cell">V</td>
-              </tr>
-              <tr>
-                <td>Vbc</td>
-                <td class="value-cell"><span id="meter_vbc">—</span></td>
-                <td class="unit-cell">V</td>
-              </tr>
-              <tr>
-                <td>Vca</td>
-                <td class="value-cell"><span id="meter_vca">—</span></td>
                 <td class="unit-cell">V</td>
               </tr>
             </tbody>
@@ -278,10 +267,72 @@
                 <td class="value-cell"><span id="meter_i3">—</span></td>
                 <td class="unit-cell">A</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Energy -->
+        <div class="section-card mb-4">
+          <div class="section-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+              <line x1="12" y1="2" x2="12" y2="12"/>
+            </svg>
+            <span data-i18n="section_energy">Energy</span>
+          </div>
+          <table class="data-table">
+            <thead>
               <tr>
-                <td>In</td>
-                <td class="value-cell"><span id="meter_in">—</span></td>
-                <td class="unit-cell">A</td>
+                <th data-i18n="th_measurement">Measurement</th>
+                <th style="text-align:right;" data-i18n="th_value">Value</th>
+                <th data-i18n="th_unit">Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+                    <span style="font-weight:700;color:#2666af;font-family:monospace;font-size:11px;">AE</span>
+                    <span data-i18n="lbl_ae">Active Energy Import</span>
+                  </span>
+                </td>
+                <td class="value-cell"><span id="meter_AE">—</span></td>
+                <td class="unit-cell">kWh</td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                    <span style="font-weight:700;color:#2666af;font-family:monospace;font-size:11px;">AS</span>
+                    <span data-i18n="lbl_as">Active Energy Export</span>
+                  </span>
+                </td>
+                <td class="value-cell"><span id="meter_AS">—</span></td>
+                <td class="unit-cell">kWh</td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+                    <span style="font-weight:700;color:#2666af;font-family:monospace;font-size:11px;">Ri</span>
+                    <span data-i18n="lbl_ri">Reactive Energy Import</span>
+                  </span>
+                </td>
+                <td class="value-cell"><span id="meter_Ri">—</span></td>
+                <td class="unit-cell">kVArh</td>
+              </tr>
+              <tr>
+                <td>
+                  <span style="display:inline-flex;align-items:center;gap:5px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                    <span style="font-weight:700;color:#2666af;font-family:monospace;font-size:11px;">Rc</span>
+                    <span data-i18n="lbl_rc">Reactive Energy Export</span>
+                  </span>
+                </td>
+                <td class="value-cell"><span id="meter_Rc">—</span></td>
+                <td class="unit-cell">kVArh</td>
               </tr>
             </tbody>
           </table>
@@ -308,17 +359,17 @@
             </thead>
             <tbody>
               <tr>
-                <td>∠ Va</td>
+                <td>∠ V1</td>
                 <td class="value-cell"><span id="angle_v1">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
-                <td>∠ Vb</td>
+                <td>∠ V2</td>
                 <td class="value-cell"><span id="angle_v2">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
-                <td>∠ Vc</td>
+                <td>∠ V3</td>
                 <td class="value-cell"><span id="angle_v3">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
@@ -375,17 +426,24 @@
           btn_refresh:      "Refresh",
           section_general:  "General Information",
           lbl_serial:       "Serial Number",
+          lbl_name_meter:   "Name Meter",
           lbl_timestamp:    "Last Reading",
           lbl_freq:         "Frequency",
           lbl_power_factor: "Power Factor",
-          section_voltages: "Voltages",
-          section_currents: "Currents",
-          section_angles:   "Phase Angles",
-          th_phase:         "Phase",
-          th_signal:        "Signal",
-          th_value:         "Value",
-          th_angle:         "Angle",
-          th_unit:          "Unit",
+          section_voltages:  "Voltages",
+          section_currents:  "Currents",
+          section_energy:    "Energy",
+          section_angles:    "Phase Angles",
+          th_phase:          "Phase",
+          th_signal:         "Signal",
+          th_measurement:    "Measurement",
+          th_value:          "Value",
+          th_angle:          "Angle",
+          th_unit:           "Unit",
+          lbl_ae:            "Active Energy Import",
+          lbl_as:            "Active Energy Export",
+          lbl_ri:            "Reactive Energy Import",
+          lbl_rc:            "Reactive Energy Export",
           err_no_data:      "No meter data available",
           err_no_data_hint: "Make sure the meter is connected and communication is working.",
           spinner_loading:  "Loading data...",
@@ -397,17 +455,24 @@
           btn_refresh:      "Actualizar",
           section_general:  "Información General",
           lbl_serial:       "Número Serial",
+          lbl_name_meter:   "Nombre del Medidor",
           lbl_timestamp:    "Última Lectura",
           lbl_freq:         "Frecuencia",
           lbl_power_factor: "Factor de Potencia",
-          section_voltages: "Voltajes",
-          section_currents: "Corrientes",
-          section_angles:   "Ángulos de Fase",
-          th_phase:         "Fase",
-          th_signal:        "Señal",
-          th_value:         "Valor",
-          th_angle:         "Ángulo",
-          th_unit:          "Unidad",
+          section_voltages:  "Voltajes",
+          section_currents:  "Corrientes",
+          section_energy:    "Energía",
+          section_angles:    "Ángulos de Fase",
+          th_phase:          "Fase",
+          th_signal:         "Señal",
+          th_measurement:    "Medición",
+          th_value:          "Valor",
+          th_angle:          "Ángulo",
+          th_unit:           "Unidad",
+          lbl_ae:            "Energía Activa Importada",
+          lbl_as:            "Energía Activa Exportada",
+          lbl_ri:            "Energía Reactiva Importada",
+          lbl_rc:            "Energía Reactiva Exportada",
           err_no_data:      "No hay datos del medidor disponibles",
           err_no_data_hint: "Verifique que el medidor esté conectado y la comunicación esté funcionando.",
           spinner_loading:  "Cargando datos...",
@@ -458,6 +523,7 @@
       }
 
       function populateData(d) {
+        document.getElementById('meter_name').textContent           = d.name_meter ?? '—';
         document.getElementById('meter_serial').textContent         = d.serial      ?? '—';
         document.getElementById('meter_timestamp_val').textContent  = d.timestamp   ?? '—';
         document.getElementById('meter_freq').textContent           = fmt(d.freq, 2);
@@ -467,15 +533,15 @@
         document.getElementById('meter_v2').textContent  = fmt(d.voltage_2);
         document.getElementById('meter_v3').textContent  = fmt(d.voltage_3);
 
-        document.getElementById('meter_vab').textContent = fmt(d.voltage_ab);
-        document.getElementById('meter_vbc').textContent = fmt(d.voltage_bc);
-        document.getElementById('meter_vca').textContent = fmt(d.voltage_ca);
 
         document.getElementById('meter_i1').textContent = fmt(d.current_1, 3);
         document.getElementById('meter_i2').textContent = fmt(d.current_2, 3);
         document.getElementById('meter_i3').textContent = fmt(d.current_3, 3);
 
-        document.getElementById('meter_in').textContent = fmt(d.current_n, 3);
+        document.getElementById('meter_AE').textContent = fmt(d.energy_A_import, 3);
+        document.getElementById('meter_AS').textContent = fmt(d.energy_A_export, 3);
+        document.getElementById('meter_Ri').textContent = fmt(d.energy_R_import, 3);
+        document.getElementById('meter_Rc').textContent = fmt(d.energy_R_export, 3);
 
         document.getElementById('angle_v1').textContent = fmt(d.angle_v1, 2);
         document.getElementById('angle_v2').textContent = fmt(d.angle_v2, 2);
