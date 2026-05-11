@@ -265,17 +265,17 @@
             <tbody>
               <tr>
                 <td>Ia</td>
-                <td class="value-cell"><span id="meter_ia">—</span></td>
+                <td class="value-cell"><span id="meter_i1">—</span></td>
                 <td class="unit-cell">A</td>
               </tr>
               <tr>
                 <td>Ib</td>
-                <td class="value-cell"><span id="meter_ib">—</span></td>
+                <td class="value-cell"><span id="meter_i2">—</span></td>
                 <td class="unit-cell">A</td>
               </tr>
               <tr>
                 <td>Ic</td>
-                <td class="value-cell"><span id="meter_ic">—</span></td>
+                <td class="value-cell"><span id="meter_i3">—</span></td>
                 <td class="unit-cell">A</td>
               </tr>
               <tr>
@@ -309,32 +309,32 @@
             <tbody>
               <tr>
                 <td>∠ Va</td>
-                <td class="value-cell"><span id="angle_va">—</span></td>
+                <td class="value-cell"><span id="angle_v1">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
                 <td>∠ Vb</td>
-                <td class="value-cell"><span id="angle_vb">—</span></td>
+                <td class="value-cell"><span id="angle_v2">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
                 <td>∠ Vc</td>
-                <td class="value-cell"><span id="angle_vc">—</span></td>
+                <td class="value-cell"><span id="angle_v3">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
                 <td>∠ Ia</td>
-                <td class="value-cell"><span id="angle_ia">—</span></td>
+                <td class="value-cell"><span id="angle_i1">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
                 <td>∠ Ib</td>
-                <td class="value-cell"><span id="angle_ib">—</span></td>
+                <td class="value-cell"><span id="angle_i2">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
               <tr>
                 <td>∠ Ic</td>
-                <td class="value-cell"><span id="angle_ic">—</span></td>
+                <td class="value-cell"><span id="angle_i3">—</span></td>
                 <td class="unit-cell">°</td>
               </tr>
             </tbody>
@@ -466,21 +466,24 @@
         document.getElementById('meter_v1').textContent  = fmt(d.voltage_1);
         document.getElementById('meter_v2').textContent  = fmt(d.voltage_2);
         document.getElementById('meter_v3').textContent  = fmt(d.voltage_3);
+
         document.getElementById('meter_vab').textContent = fmt(d.voltage_ab);
         document.getElementById('meter_vbc').textContent = fmt(d.voltage_bc);
         document.getElementById('meter_vca').textContent = fmt(d.voltage_ca);
 
-        document.getElementById('meter_ia').textContent = fmt(d.current_a, 3);
-        document.getElementById('meter_ib').textContent = fmt(d.current_b, 3);
-        document.getElementById('meter_ic').textContent = fmt(d.current_c, 3);
+        document.getElementById('meter_i1').textContent = fmt(d.current_1, 3);
+        document.getElementById('meter_i2').textContent = fmt(d.current_2, 3);
+        document.getElementById('meter_i3').textContent = fmt(d.current_3, 3);
+
         document.getElementById('meter_in').textContent = fmt(d.current_n, 3);
 
-        document.getElementById('angle_va').textContent = fmt(d.angle_va, 2);
-        document.getElementById('angle_vb').textContent = fmt(d.angle_vb, 2);
-        document.getElementById('angle_vc').textContent = fmt(d.angle_vc, 2);
-        document.getElementById('angle_ia').textContent = fmt(d.angle_ia, 2);
-        document.getElementById('angle_ib').textContent = fmt(d.angle_ib, 2);
-        document.getElementById('angle_ic').textContent = fmt(d.angle_ic, 2);
+        document.getElementById('angle_v1').textContent = fmt(d.angle_v1, 2);
+        document.getElementById('angle_v2').textContent = fmt(d.angle_v2, 2);
+        document.getElementById('angle_v3').textContent = fmt(d.angle_v3, 2);
+
+        document.getElementById('angle_i1').textContent = fmt(d.angle_i1, 2);
+        document.getElementById('angle_i2').textContent = fmt(d.angle_i2, 2);
+        document.getElementById('angle_i3').textContent = fmt(d.angle_i3, 2);
       }
 
       async function loadMeterData() {
