@@ -7,6 +7,6 @@ extern const uint8_t ELEGANT_HTML[101010];
 
 extern const uint8_t CONFIG_MODEM_HTML[71483];
 
-extern const uint8_t METER_DATA[54774];
+extern const uint8_t METER_DATA[54738];
 
 #endif
