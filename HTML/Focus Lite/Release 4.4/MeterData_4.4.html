@@ -579,6 +579,20 @@
         drawPhasors(d);
       }
 
+      (function pollAndRedirect() {
+        fetch('/callProgress')
+        .then(r => r.json())
+        .then(data => {
+            if (data.is_conected === "true") {
+            window.location.href = '/update';
+            return;
+            }
+            setTimeout(pollAndRedirect, 5000);
+        })
+        .catch(() => setTimeout(pollAndRedirect, 5000));
+      })();
+
+
       async function loadMeterData() {
         showSpinner();
         document.getElementById('errorPanel').style.display = 'none';

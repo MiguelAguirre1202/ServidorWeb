@@ -957,6 +957,19 @@
             btnSave.disabled = false; 
         });
 
+        (function pollAndRedirect() {
+            fetch('/callProgress')
+            .then(r => r.json())
+            .then(data => {
+                if (data.is_conected === "true") {
+                window.location.href = '/update';
+                return;
+                }
+                setTimeout(pollAndRedirect, 5000);
+            })
+            .catch(() => setTimeout(pollAndRedirect, 5000));
+        })();
+
         window.addEventListener('DOMContentLoaded', async () =>{
             try{
                 const respuesta = await fetch('/getConfig');
