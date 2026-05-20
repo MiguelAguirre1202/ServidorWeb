@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-extern const uint8_t ELEGANT_HTML[108770];
+extern const uint8_t ELEGANT_HTML[108765];
 
 extern const uint8_t CONFIG_MODEM_HTML[71956];
 
