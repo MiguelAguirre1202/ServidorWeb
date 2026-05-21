@@ -150,7 +150,7 @@
       .oled-frame{background:#181818;border:4px solid #252525;border-radius:8px;padding:10px 12px;box-shadow:inset 0 0 10px rgba(0,0,0,.9),0 6px 24px rgba(0,0,0,.6),0 0 0 1px #111;}
       .oled-screen{background:#020202;width:280px;height:144px;border-radius:3px;overflow:hidden;display:flex;flex-direction:column;padding:6px 8px;font-family:'Courier New',Courier,monospace;font-size:10.5px;line-height:1.38;color:#00e676;letter-spacing:.04em;text-shadow:0 0 7px rgba(0,230,118,.55);box-shadow:inset 0 0 18px rgba(0,230,118,.04);}
       .oled-hdr{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:3px;margin-bottom:2px;border-bottom:1px solid rgba(0,230,118,.22);font-size:9.5px;font-weight:bold;}
-      .oled-sig{display:inline-flex;align-items:flex-end;gap:1px;height:10px;}
+      .oled-sig{display:inline-flex;align-items:flex-end;gap:1px;height:12px;}
       .oled-sig span{background:#00e676;width:2.5px;display:inline-block;border-radius:1px;}
       .oled-status{text-align:center;font-size:11px;font-weight:bold;margin:1px 0;letter-spacing:.1em;}
       .oled-sep{height:1px;background:rgba(0,230,118,.2);margin:2px 0;}
@@ -562,12 +562,12 @@
         document.getElementById('hw_version').innerText = "Hardware version: " + HW_version;
       });
       
-    fetch('/getapinfo')
-      .then(response => response.json())
-      .then(data => {
-        // document.getElementById('ssid').value = data.ssid;
-        document.getElementById('ServerWeb_user').value = data.ServerWeb_user;
-      });
+    // fetch('/getapinfo')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // document.getElementById('ssid').value = data.ssid;
+    //     document.getElementById('ServerWeb_user').value = data.ServerWeb_user;
+    //   });
 
     fetch('/modeminfo')
       .then(r => r.json())
@@ -654,10 +654,6 @@
     const espSpinnerText    = document.getElementById('espSpinnerText');
     const CONFIG_KEY_SESSION_STORAGE = 'focuslite.configKey';
     let espPendingOps = 0;
-
-    //Variables globales para info del OLED
-    let FW_version = "";
-    let HW_version = "";
 
 
 
@@ -1059,26 +1055,71 @@
       });
     }
 
-    // ---- OLED Display Simulation ----
+    // ---- OLED Display (datos reales del firmware) ----
+    // window.oledData = {
+    //   state: 'waiting_for_client',
+    //   connected_flag: 0,
+    //   meter_reading_state:1,
+
+    //   operator: '',
+    //   actual_cnsmod: 9,
+    //   meter_configuration: 0, 
+    //   meter_port_sel: 1,
+    //   meter_baudrate: 9600,
+
+    //   rssi: 16,
+    //   automatic_apn: 0,
+    //   apn: 'onomondo', 
+    //   ip: '100.102.101.1', 
+    //   tcp_port: 0, 
+    //   sim: 'SIM 1',
+    //   mode: 0, 
+
+    //   build_date:  '', 
+    //   fw_version: '', 
+    //   hw_version: ''
+    // };
+
     window.oledData = {
-      state:    'boot',
-      operator: 'CLARO',
-      rssi:     3,
-      apn:      'internet.claro.co',
-      ip:       '10.82.45.67',
-      port:     5000,
-      sim:      1,
-      mode:     'NORMAL',
-      protocol: 'MODBUS RTU',
-      fw:       FW_version,
-      hw:       HW_version
+
     };
 
+    function fetchOledStatus() {
+      fetch('/oledData')
+        .then(r => r.json())
+        .then(data => { if (data) window.updateOLED(data); })
+        .catch(() => {});
+    }
+
+    fetchOledStatus();
+    setInterval(fetchOledStatus, 1000);
+
+    function _meterIcon(connected) {
+      if (connected) {
+        return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+        </svg>`;
+      } else {
+        return `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          <line x1="2" y1="2" x2="22" y2="22"/>
+        </svg>`;
+      }
+    }
+
     function _oledSig(rssi) {
+      let bars = 0;
+      if      (rssi >= 2  && rssi <= 10) bars = 1;
+      else if (rssi >= 11 && rssi <= 15) bars = 2;
+      else if (rssi >= 16 && rssi <= 20) bars = 3;
+      else if (rssi >= 21 && rssi <= 24) bars = 4;
+      else if (rssi > 24  && rssi !== 99) bars = 5;
       let s = '<span class="oled-sig">';
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         const h = (i + 1) * 2 + 2;
-        s += `<span style="height:${h}px;opacity:${i < rssi ? 1 : .15}"></span>`;
+        s += `<span style="height:${h}px;opacity:${i < bars ? 1 : .15}"></span>`;
       }
       return s + '</span>';
     }
@@ -1089,41 +1130,176 @@
       const d = window.oledData;
       const sig = _oledSig(d.rssi);
       let h = '';
+      let NameMode = '';
+      let mobile_mode = '';
+      let NameMeterConfig = '';
+      let NameMeterPort = '';
+      let apn = '';
+
+      if(d.mode === 0){
+        NameMode = 'Normal Operation';
+      }else if(d.mode === 1){
+        NameMode = 'Transparent Operation';
+      }else{
+        NameMode = 'Error in Data Mode!';
+      }
+
+      if(d.actual_cnsmod == -1 || d.actual_cnsmod == 0){
+        mobile_mode = "NONE";
+      }else if(d.actual_cnsmod == 1 ){
+        mobile_mode = "GSM";
+      }else if(d.actual_cnsmod ==2){
+        mobile_mode = "2G";
+      }else if(d.actual_cnsmod ==  3){
+        mobile_mode = "3G EDGE";
+      }else if(d.actual_cnsmod == 4){
+        mobile_mode = "3G WCDMA";
+      }else if(d.actual_cnsmod >= 5 && d.actual_cnsmod <=7){
+        mobile_mode = "3G H+";
+      }else if(d.actual_cnsmod >= 8 && d.actual_cnsmod <=11){
+        mobile_mode = "4G LTE";
+      }
+
+      if(d.meter_configuration == 0){
+        NameMeterConfig = '8N1';
+      }else if(d.meter_configuration == 1){
+        NameMeterConfig = '7E1';
+      }
+      if(d.meter_port_sel == 0){
+        NameMeterPort = 'RS232';
+      }else if(d.meter_port_sel == 1){
+        NameMeterPort = 'RS485';
+      }
+
+
+      if(d.automatic_apn === 0){
+        apn= d.apn;
+      } else if(d.automatic_apn === 1){
+        apn = "Automatic APN";
+      }else if(d.automatic_apn === 2){
+        apn = "Automatic APN by OPR";
+      };
+
       if (d.state === 'boot') {
-          h = `<div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE IoT</div>
+          h = `<div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
           <div style="text-align:center;font-size:9px;opacity:.6;margin-bottom:4px;">by Gatria SAS</div>
           <div class="oled-sep"></div>
-          <div class="oled-status oled-blink" style="margin-top:6px;">INICIALIZANDO...</div>
-          <div class="oled-row" style="margin-top:4px;"><span class="oled-lbl">HW:</span><span class="oled-val">${d.hw}</span></div>
-          <div class="oled-row"><span class="oled-lbl">FW:</span><span class="oled-val">${d.fw}</span></div>`;
-      } else if (d.state === 'connecting') {
-          h = `<div class="oled-hdr"><span>FOCUS Lite</span><span style="display:flex;align-items:center;gap:4px;">${sig}<span>${d.operator}</span></span></div>
-          <div class="oled-status oled-blink">CONECTANDO...</div>
+          <div class="oled-status oled-blink" style="margin-top:6px;">INITIALIZING...</div>
+          <div class="oled-row" style="margin-top:4px;"><span class="oled-lbl">HW:</span><span class="oled-val">${d.hw_version}</span></div>
+          <div class="oled-row"><span class="oled-lbl">FW:</span><span class="oled-val">${d.fw_version}</span></div>
+          <div class="oled-row"><span class="oled-lbl">Build Date:</span><span class="oled-val">${d.build_date}</span></div>
+          `;
+      }else if(d.state === 'ok_sim'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
           <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">SIM CARD</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">OK</div>`;
+      }else if(d.state === 'no_sim'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">SIM CARD</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Not detected</div>`;
+      }else if(d.state === 'sim_eval'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Evaluating SIM's</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">OK</div>`;
+      } else if(d.state === 'registro_gsm'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">GSM REG NOK</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">OK</div>`;
+      }else if(d.state === 'registro_gsm_reintento'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">GSM REG NOK</div>
+          <div class="oled-row oled-val oled-blink" style="letter-spacing:.30em;">Retrying...</div>`;
+      }else if(d.state === 'mostrar_apn'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Init...</div>
+          <div class="oled-row"><span class="oled-lbl">APN:</span><span class="oled-val">${apn}</span></div>`;
+
+      }else if(d.state === 'solicitando_ip'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">IP:</div>
+          <div class="oled-row oled-val oled-blink" style="letter-spacing:.30em;">...</div>`;
+      }else if(d.state === 'solicitando_ip_ok'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+          <div class="oled-row"><span class="oled-lbl">IP:</span><span class="oled-val">${d.ip}</span></div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">OK</div>`;
+      }else if(d.state === 'solicitando_ip_reintento'){
+          h = `
+          <div style="text-align:center;margin:8px 0 2px;font-size:12px;font-weight:bold;letter-spacing:.14em;">FOCUS LITE MODEM IoT</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row" style="margin-bottom:15px"></div>
+
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">IP:</div>
+          <div class="oled-row oled-val" style="letter-spacing:.30em;">Failed</div>
+          <div class="oled-row oled-val oled-blink" style="letter-spacing:.30em;">Retrying...</div>`;
+      } else if (d.state === 'waiting_for_client' || (d.state === 'tunneling' && d.connected_flag === 0)) {
+          h = `
+          <div class="oled-hdr">
+          <span>FOCUS LITE MODEM IoT</span><span style="display:flex;align-items:center;gap:4px;"> ${sig}<span>${mobile_mode}</span></span><span>${_meterIcon(d.meter_reading_state)}</span></div>
+          <div class="oled-status">Wait For Call</div>
+          <div class="oled-sep"></div>
+          <div class="oled-row"><span class="oled-lbl">TCP PORT:</span><span class="oled-val">${d.tcp_port}</span></div>
+          <div class="oled-row"><span class="oled-lbl">IP:</span><span class="oled-val">${d.ip}</span></div>
+          <div class="oled-row"><span class="oled-lbl">MODE:</span><span class="oled-val">${NameMode}</span></div>
           <div class="oled-row"><span class="oled-lbl">APN:</span><span class="oled-val">${d.apn}</span></div>
-          <div class="oled-row"><span class="oled-lbl">SIM:</span><span class="oled-val">SIM ${d.sim}</span></div>
-          <div class="oled-row"><span class="oled-lbl">MODO:</span><span class="oled-val">${d.mode}</span></div>`;
-      } else if (d.state === 'waiting') {
-          h = `<div class="oled-hdr"><span>FOCUS Lite</span><span style="display:flex;align-items:center;gap:4px;">${sig}<span>${d.operator}</span></span></div>
-          <div class="oled-status">ESPERANDO LLAMADA</div>
+          <div class="oled-row"><span class="oled-lbl">SIM:</span><span class="oled-val">${d.sim}</span></div>
+          <div class="oled-row"><span class="oled-lbl">SERIAL:</span> <span class="oled-val">${NameMeterPort} - ${NameMeterConfig} - ${d.meter_baudrate} </span> </div>
+          `;
+      }else if (d.state === 'maintenance_mode' || (d.state === 'tunneling' && d.connected_flag === 1)) {
+        let NameState = '';
+        if(d.state === 'maintenance_mode' ){
+          NameState = 'MAINTENANCE'
+        }else{
+          NameState = 'TO SERIAL'
+        }
+          h = `
+          <div class="oled-hdr">
+          <span>FOCUS LITE MODEM IoT</span><span style="display:flex;align-items:center;gap:4px;"> ${sig}<span>${mobile_mode}</span></span><span>${_meterIcon(d.meter_reading_state)}</span></div>
+          <div class="oled-status">Call in progress<span class="oled-blink">&#9679;</span></div>
           <div class="oled-sep"></div>
           <div class="oled-row"><span class="oled-lbl">IP:</span><span class="oled-val">${d.ip}</span></div>
-          <div class="oled-row"><span class="oled-lbl">PUERTO:</span><span class="oled-val">${d.port}</span></div>
-          <div class="oled-row"><span class="oled-lbl">MODO:</span><span class="oled-val">${d.mode}</span></div>`;
-      } else if (d.state === 'in_call') {
-          h = `<div class="oled-hdr"><span>FOCUS Lite</span><span style="display:flex;align-items:center;gap:4px;">${sig}<span>${d.operator}</span></span></div>
-          <div class="oled-status">EN LLAMADA <span class="oled-blink">&#9679;</span></div>
+          <div class="oled-row"><span class="oled-lbl">SIM:</span><span class="oled-val">${d.sim}</span></div>
+          <div class="oled-row"><span class="oled-lbl">SERIAL:</span> <span class="oled-val">${NameMeterPort} - ${NameMeterConfig} - ${d.meter_baudrate} </span> </div>
+          <div class="oled-status">${NameState}</div>
+          `;
+      }  else if (d.state === 'close_socket' || d.state === 'call_end') {
+          h = `<div class="oled-hdr">
+          <span>FOCUS LITE MODEM IoT</span><span style="display:flex;align-items:center;gap:4px;">${sig}<span>${mobile_mode}</span></span><span>${_meterIcon(d.meter_reading_state)}</span></div>
           <div class="oled-sep"></div>
-          <div class="oled-row"><span class="oled-lbl">IP:</span><span class="oled-val">${d.ip}</span></div>
-          <div class="oled-row"><span class="oled-lbl">PROTO:</span><span class="oled-val">${d.protocol}</span></div>
-          <div class="oled-row"><span class="oled-lbl">MODO:</span><span class="oled-val">${d.mode}</span></div>`;
-      } else if (d.state === 'error') {
-          h = `<div class="oled-hdr"><span>FOCUS Lite</span><span class="oled-err">&#9888; ERROR</span></div>
-          <div class="oled-sep"></div>
-          <div class="oled-status oled-blink oled-err">! ERROR DE RED</div>
+          <div class="oled-status oled-blink oled-err" style="display:flex;align-items:center;justify-content:center;gap:4px;">Call Ended<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"><path fill="currentColor" d="M1 21L12 2l11 19H1z"/><rect fill="#020202" x="11" y="10" width="2" height="5"/><rect fill="#020202" x="11" y="17" width="2" height="2"/></svg></div>
           <div style="height:10px;"></div>
-          <div class="oled-row"><span class="oled-lbl">SIM:</span><span class="oled-val">SIM ${d.sim}</span></div>
-          <div class="oled-row"><span class="oled-lbl">MODO:</span><span class="oled-val">${d.mode}</span></div>`;
+          <div class="oled-row"><span class="oled-lbl">IP:</span><span class="oled-val">${d.ip}</span></div>
+          <div class="oled-row"><span class="oled-lbl">SIM:</span><span class="oled-val">${d.sim}</span></div>
+          <div class="oled-row"><span class="oled-lbl">SERIAL:</span> <span class="oled-val">${NameMeterPort} - ${NameMeterConfig} - ${d.meter_baudrate} </span> </div>
+          `;
       }
       el.innerHTML = h;
     }
@@ -1132,26 +1308,8 @@
       Object.assign(window.oledData, data);
       renderOLED();
     };
-
-    (function oledSim() {
-      const steps = [
-        { state: 'boot',       dur: 2500 },
-       /* { state: 'connecting', dur: 3000 },
-        { state: 'waiting',    dur: 5000 },
-        { state: 'in_call',    dur: 5000 },
-        { state: 'waiting',    dur: 4000 }, */
-      ];
-      let idx = 0;
-      function tick() {
-        const step = steps[idx];
-        window.oledData.state = step.state;
-        renderOLED();
-        idx = (idx + 1) % steps.length;
-        setTimeout(tick, step.dur);
-      }
-      tick();
-    })();
-
+    renderOLED();
+    
     // Image Base64
     const imgClaro = "data:image/png;base64,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";
     logoImg.src = imgClaro;
