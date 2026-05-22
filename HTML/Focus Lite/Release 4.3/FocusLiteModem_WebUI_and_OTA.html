@@ -370,10 +370,11 @@
               <span style="font-weight:bold; font-size:14px; color:#374151;" data-i18n="section_meter_test">Meter Communication Test</span>
               <button type="button" id="btnMeterTest" onclick="testMeterCommunication()"
                 class="hover:bg-blue-500 back_ground_gatria text-white-button text-sm"
-                style="display:flex; align-items:center; gap:8px; padding:8px 24px;">
+                style="display:flex; align-items:center; gap:8px; padding:8px 24px;" disabled>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                 <span data-i18n="btn_test_comm">Test Communication</span>
               </button>
+              <p id="meterTestBlockedMsg" style="font-size:11px; color:#9ca3af; margin:0;" data-i18n="meter_test_not_ready">Waiting for device to be ready...</p>
             </div>
             <div id="meterTestResult" style="display:none; margin-top:10px; padding:8px 12px; border-radius:6px; font-size:13px; align-items:center; gap:8px;"></div>
           </div>
@@ -776,7 +777,10 @@
             meter_label_protocol: "Communication protocol: ",
             meter_label_baudrate: "Baud Rate Meter: ",
             meter_label_config:   "Meter Configuration: ",
-            oled_label:           "OLED Display",
+            oled_label:             "OLED Display",
+            incall_badge:           "Call in progress — configuration blocked",
+            meter_test_not_ready:   "Waiting for device to be ready...",
+            meter_test_in_call:     "Cannot test while device is in a call",
         },
         es: {
             tagline:              "Focus IoT by Gatria es una marca de Gatria SAS",
@@ -854,7 +858,10 @@
             meter_label_protocol: "Protocolo de comunicación: ",
             meter_label_baudrate: "Baud Rate Medidor: ",
             meter_label_config:   "Configuración Medidor: ",
-            oled_label:           "Pantalla OLED",
+            oled_label:             "Pantalla OLED",
+            incall_badge:           "Llamada en progreso — configuración bloqueada",
+            meter_test_not_ready:   "Esperando que el dispositivo esté listo...",
+            meter_test_in_call:     "No se puede probar mientras el dispositivo está en llamada",
         }
     };
     window.currentLang = localStorage.getItem('lang') || 'en';
@@ -1345,9 +1352,30 @@
       el.innerHTML = h;
     }
 
+    function syncMeterTestBtn() {
+      const btn = document.getElementById('btnMeterTest');
+      const msg = document.getElementById('meterTestBlockedMsg');
+      if (!btn) return;
+      const d = window.oledData;
+      const ready = d.state === 'waiting_for_client';
+      const inCall = (d.state === 'tunneling' && d.connected_flag === 1) || d.state === 'maintenance_mode';
+      btn.disabled = !ready;
+      if (msg) {
+        const t = window.I18N[window.currentLang];
+        if (ready) {
+          msg.style.display = 'none';
+          msg.textContent = '';
+        } else {
+          msg.style.display = 'block';
+          msg.textContent = inCall ? t.meter_test_in_call : t.meter_test_not_ready;
+        }
+      }
+    }
+
     window.updateOLED = function(data) {
       Object.assign(window.oledData, data);
       renderOLED();
+      syncMeterTestBtn();
     };
     renderOLED();
     
