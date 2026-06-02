@@ -30,8 +30,8 @@ To switch between sync and async webserver examples, edit `src_dir` in `platform
 
 | File | Purpose |
 |------|---------|
-| `src/ElegantOTA.h` | Public API — class declaration, platform macros, mode enums |
-| `src/ElegantOTA.cpp` | Core implementation — HTTP route handlers, OTA update logic |
+| `src/ServidorWeb.h` | Public API — class declaration, platform macros, mode enums |
+| `src/ServidorWeb.cpp` | Core implementation — HTTP route handlers, OTA update logic |
 | `src/elop.h` | Declares the embedded HTML byte arrays (`ELEGANT_HTML`, `CONFIG_MODEM_HTML`) |
 | `src/elop.cpp` | Defines the actual compressed HTML content as `uint8_t` arrays |
 
@@ -58,7 +58,7 @@ The source HTML files are:
 - `0` (default): synchronous `WebServer` / `ESP8266WebServer`
 - `1`: `ESPAsyncWebServer` — required for `AsyncDemo` example
 
-**Platform abstraction** uses preprocessor guards (`#if defined(TARGET_RP2040)`, `ESP8266`, `ESP32`) throughout `ElegantOTA.cpp` for filesystem selection (LittleFS vs SPIFFS) and OTA partition types.
+**Platform abstraction** uses preprocessor guards (`#if defined(TARGET_RP2040)`, `ESP8266`, `ESP32`) throughout `ServidorWeb.cpp` for filesystem selection (LittleFS vs SPIFFS) and OTA partition types.
 
 **OTA flow:**
 1. `GET /ota/start?mode=firmware|fs` — initializes `Update` with MD5 hash
