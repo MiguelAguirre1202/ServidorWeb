@@ -30,8 +30,8 @@ Para alternar entre los ejemplos de servidor web síncrono y asíncrono, editar 
 
 | Archivo | Propósito |
 |---------|-----------|
-| `src/ElegantOTA.h` | API pública — declaración de clase, macros de plataforma, enums de modo |
-| `src/ElegantOTA.cpp` | Implementación principal — manejadores de rutas HTTP, lógica de actualización OTA |
+| `src/ServidorWeb.h` | API pública — declaración de clase, macros de plataforma, enums de modo |
+| `src/ServidorWeb.cpp` | Implementación principal — manejadores de rutas HTTP, lógica de actualización OTA |
 | `src/elop.h` | Declara los arreglos de bytes HTML embebidos (`ELEGANT_HTML`, `CONFIG_MODEM_HTML`) |
 | `src/elop.cpp` | Define el contenido HTML comprimido como arreglos `uint8_t` |
 
@@ -58,7 +58,7 @@ Los archivos HTML fuente son:
 - `0` (por defecto): `WebServer` / `ESP8266WebServer` síncrono
 - `1`: `ESPAsyncWebServer` — requerido para el ejemplo `AsyncDemo`
 
-**Abstracción de plataforma** mediante guardas de preprocesador (`#if defined(TARGET_RP2040)`, `ESP8266`, `ESP32`) en `ElegantOTA.cpp` para selección de sistema de archivos (LittleFS vs SPIFFS) y tipos de partición OTA.
+**Abstracción de plataforma** mediante guardas de preprocesador (`#if defined(TARGET_RP2040)`, `ESP8266`, `ESP32`) en `ServidorWeb.cpp` para selección de sistema de archivos (LittleFS vs SPIFFS) y tipos de partición OTA.
 
 **Flujo OTA:**
 1. `GET /ota/start?mode=firmware|fs` — inicializa `Update` con hash MD5

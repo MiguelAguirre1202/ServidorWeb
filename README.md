@@ -61,7 +61,7 @@ __1. Include Dependency__
 At the very beginning of sketch include the ElegantOTA library.
 
 ```bash
- #include <ElegantOTA.h>
+ #include <ServidorWeb.h>
 ```
 
 __2. Add `begin` function__
@@ -96,7 +96,7 @@ This is how a ready to use example will look like. After uploading the code to y
   #include <WebServer.h>
 #endif
  
-#include <ElegantOTA.h>
+#include <ServidorWeb.h>
  
 const char* ssid = "........";
 const char* password = "........";
