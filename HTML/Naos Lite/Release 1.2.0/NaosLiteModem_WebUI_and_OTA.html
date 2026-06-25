@@ -559,7 +559,9 @@
     window.onFileInput = z;
     window.resetView = G;
 
-
+    let FW_version = "N/A";
+    let HW_version = "N/A";
+    
     fetch('/info')
       .then(r => r.json())
       .then(data => { 
