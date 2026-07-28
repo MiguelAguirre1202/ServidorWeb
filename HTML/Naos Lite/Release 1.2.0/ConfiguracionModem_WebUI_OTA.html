@@ -433,21 +433,21 @@
                 <option value="2">APN Automatic for operator</option>
             </select>
         </div>
-        <div class="flex flex-row justify-between items-center gap-4">
+        <div class="flex flex-row justify-between items-center gap-4" style="display: none;">
             <label data-i18n="enable_transparent">Enable Transparent Mode:</label>
             <select id="input_enable_transparent_mode" name="enable_transparent" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
-        <div class="flex flex-row justify-between items-center gap-4">
+        <div class="flex flex-row justify-between items-center gap-4" style="display: none;">
             <label data-i18n="enable_test_mode">Enable test mode:</label>
             <select id="input_enable_test_mode" name="enable_tmode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Enable</option>
                 <option value="0">Disable</option>
             </select>
         </div>
-        <div class="flex flex-row justify-between items-center gap-4">
+        <div class="flex flex-row justify-between items-center gap-4" style="display: none;">
             <label data-i18n="mode_data">Mode Data:</label>
             <select id="input_mode_data" name="mode" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
                 <option value="1">Data Transparent</option>
@@ -783,16 +783,16 @@
 
         setLang(currentLang);
 
-        async function checkAuth() {
-            try{
-                const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
-                if(!r.ok){
-                    window.location.replace('/update');
-                }
-            }catch (e){
-                window.location.replace('/update');
-            } 
-        }
+        // async function checkAuth() {
+        //     try{
+        //         const r = await fetch('/auth-check', { method:'GET', cache:'no-store'});
+        //         if(!r.ok){
+        //             window.location.replace('/update');
+        //         }
+        //     }catch (e){
+        //         window.location.replace('/update');
+        //     } 
+        // }
 
         window.addEventListener('pageshow', async (e) =>{
             if(e.persisted){
@@ -1102,7 +1102,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `focuslite_config_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+            a.download = `naoslite_config_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
             a.click();
             a.remove();
             URL.revokeObjectURL(url);

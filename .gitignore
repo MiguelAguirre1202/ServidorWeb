@@ -34,11 +34,11 @@
 
 #HTML files
 # *.
-DisplayRemoto_FW4_2.html
-Main inicial.html
-ServerFocusLite.html
-VisualizacionDatos_FW4_2.html
-DisplayRemoto_New_feature.html
+# DisplayRemoto_FW4_2.html
+# Main inicial.html
+# ServerFocusLite.html
+# VisualizacionDatos_FW4_2.html
+# DisplayRemoto_New_feature.html
 
 node_modules
 .DS_Store
