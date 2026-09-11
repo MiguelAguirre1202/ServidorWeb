@@ -563,8 +563,8 @@
     fetch('/info')
       .then(r => r.json())
       .then(data => { 
-        FW_version = data.fw_version || "N/A";
-        HW_version = data.hw_version || "N/A";
+        const FW_version = data.fw_version || "N/A";
+        const HW_version = data.hw_version || "N/A";
         document.getElementById('fw_version').innerText = "Firmware version: " + FW_version;
         document.getElementById('hw_version').innerText = "Hardware version: " + HW_version;
       });
