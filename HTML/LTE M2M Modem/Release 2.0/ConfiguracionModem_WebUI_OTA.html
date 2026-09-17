@@ -330,7 +330,7 @@
     </div>
     <button id="btnLang" title="Cambiar a Español">🇪🇸 ES</button>
     <p class="estyle_gatria" data-i18n="tagline">Focus IoT by Gatria es un marca de Gatria SAS</p>
-    <h2 class="mt-12" style="font-weight:bold">NMC Lite Modem <p id="hw_version"></p></h1>
+    <h2 class="mt-12" style="font-weight:bold">LTE M2M Modem <p id="hw_version"></p></h1>
     <p id="fw_version" class="text-center text-xs mb-1" style="font-weight:bold"></p>
 
     <form id="formConfigModem" method="post" action = "/configModem">
@@ -488,6 +488,15 @@
                 <option value="0">Disable</option>
             </select>
         </div>
+
+        <div class="flex flex-row justify-between items-center gap-4">
+            <label data-i18n="automatic_meter_port">Automatic Meter type of port:</label>
+            <select id="input_enable_automatic_meter_port_sel" name="enable_automatic_meter_port_sel" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                <option value="1">Enable</option>
+                <option value="0">Disable</option> 
+            </select>
+        </div>
+
         <div class="flex flex-row justify-between items-center gap-4">
             <label data-i18n="meter_port">Meter type of port selection:</label>
             <select id="input_meter_type_port" name="meter_port_sel" data-type="number" class="block appearance-none py-1 px-2 text-sm text-gray-900 border border-gray-200 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
@@ -674,6 +683,7 @@
                 enable_in1:             "Digital Input 1:",
                 enable_in2:             "Digital Input 2:",
                 meter_port:             "Serial Interface:",
+                automatic_meter_port:   "Serial Interface Automatic:",
                 tcp_port:               "TCP Port:",
                 tcp_maint_port:         "TCP Maintenance Port:",
                 tcp_timeout:            "TCP Timeout ( ms ):",
@@ -732,6 +742,7 @@
                 enable_in1:            "Entrada Digital 1:",
                 enable_in2:            "Entrada Digital 2:",
                 meter_port:            "Interfaz Serial:",
+                automatic_meter_port:  "Interfaz Serial Automática:",
                 tcp_port:              "Puerto TCP:",
                 tcp_maint_port:        "Puerto TCP Mantenimiento:",
                 tcp_timeout:           "Tiempo de Espera TCP ( ms ):",
@@ -1029,6 +1040,7 @@
                 document.getElementById ("input_enable_in1").value = datos.enable_digital1;
                 document.getElementById ("input_enable_in2").value = datos.enable_digital2;
                 document.getElementById ("input_meter_type_port").value = datos.meter_port_sel;
+                document.getElementById ("input_enable_automatic_meter_port_sel").value = datos.enable_automatic_meter_port_sel;
                 document.getElementById ("input_tcp_port").value = datos.tcp_port;
                 document.getElementById ("input_tcp_maintance_port").value = datos.tcp_port_maintenance;
                 document.getElementById ("input_tcp_timeout").value = datos.tcp_timeout;
